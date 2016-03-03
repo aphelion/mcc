@@ -14,7 +14,18 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'contractinator'
+
 RSpec.configure do |config|
+  config.include Contractinator::ContractHelpers
+
+  config.after(:suite) do
+    puts
+    puts Contractinator::Contract.messages
+    puts
+    puts "#{Contractinator::Contract.fulfilled_set.count} fulfilled contracts"
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

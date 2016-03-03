@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.0'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'haml'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -34,6 +35,9 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-html-matchers'
+  gem 'rails-controller-testing'
+  gem 'contractinator'
 end
 
 group :development do
