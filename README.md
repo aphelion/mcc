@@ -1,24 +1,11 @@
-## README
+# MCC
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Heroku Configuration
 
-Things you may want to cover:
+Configure Heroku to run migrations on every deploy.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+heroku buildpacks:set https://github.com/heroku/heroku-buildpack-ruby
+heroku buildpacks:add https://github.com/gunpowderlabs/buildpack-ruby-rake-deploy-tasks
+heroku config:set DEPLOY_TASKS='db:migrate cache:clear'
+```
