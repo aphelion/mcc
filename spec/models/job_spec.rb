@@ -6,6 +6,13 @@ describe Job do
   let(:valid_attributes) { JobAttributes.valid_attributes }
   let(:statuses) { JobAttributes.statuses }
 
+  it 'saves to the database' do
+    savedJob = Job.create(valid_attributes)
+    foundJob = Job.find(savedJob.id)
+
+    expect(foundJob).to have_attributes(valid_attributes)
+  end
+
   context 'instance attributes' do
     let(:job) { jobs(:job_1) }
 
