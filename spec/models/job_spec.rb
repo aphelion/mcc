@@ -4,12 +4,17 @@ require 'support/job_attributes'
 describe Job do
   fixtures(:jobs)
   let(:valid_attributes) { JobAttributes.valid_attributes }
+  let(:statuses) { JobAttributes.statuses }
 
   context 'instance attributes' do
     let(:job) { jobs(:job_1) }
 
     it 'has a name' do
       agree(job, :name).will eq('job 1')
+    end
+
+    it 'has a status' do
+      agree(job, :status).will eq('passed')
     end
   end
 
@@ -57,6 +62,12 @@ describe Job do
     describe '.find' do
       it 'finds a Job by id' do
         agree(Job, :find, '1').will be_a(Job)
+      end
+    end
+
+    describe '.statuses' do
+      it 'provides the list of Job statuses' do
+        agree(Job, :statuses).will eq(statuses)
       end
     end
   end

@@ -1,6 +1,8 @@
 job_1:
   id: 1
   name: 'job 1'
+  status: 'passed'
 job_2:
   id: 2
   name: 'job 2'
+  status: 'failed'

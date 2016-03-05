@@ -8,7 +8,11 @@ describe 'jobs/show.html.haml' do
   end
 
   it 'shows the Job' do
+    contract 'job.name -> ""'
+    contract 'job.status -> ""'
+    
     expect(rendered).to include(job.name)
+    expect(rendered).to include(job.status)
   end
 
   it 'links to the Job edit page' do

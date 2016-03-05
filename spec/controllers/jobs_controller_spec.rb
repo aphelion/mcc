@@ -6,6 +6,7 @@ describe JobsController do
   let(:invalid_attributes) { JobAttributes.invalid_attributes }
   let(:updated_invalid_attributes) { JobAttributes.updated_invalid_attributes }
   let(:extra_attributes) { JobAttributes.extra_attributes }
+  let(:statuses) { JobAttributes.statuses }
 
   context 'object seams' do
     it 'provides the model via #model' do
@@ -21,7 +22,7 @@ describe JobsController do
 
     before do
       contract 'JobsController.model -> Job'
-      expect(controller).to receive(:model).and_return(model)
+      allow(controller).to receive(:model).and_return(model)
     end
 
     describe 'GET index' do
@@ -44,6 +45,7 @@ describe JobsController do
     describe 'GET new' do
       before do
         stipulate(model).must receive(:new).and_return(job)
+        stipulate(model).must receive(:statuses).and_return(statuses)
         get :new
       end
 
@@ -55,6 +57,11 @@ describe JobsController do
       it 'assigns a new job as @job' do
         fulfill 'jobs#new assign @job'
         expect(assigns(:job)).to be(job)
+      end
+
+      it 'assigns statuses as @statuses' do
+        fulfill 'jobs#new assign @statuses'
+        expect(assigns(:statuses)).to eq(statuses.keys)
       end
     end
 
@@ -126,12 +133,18 @@ describe JobsController do
     describe 'GET edit' do
       before do
         stipulate(model).must receive(:find).with('1').and_return(job)
+        stipulate(model).must receive(:statuses).and_return(statuses)
         get :edit, params: {id: 1}
       end
 
       it 'renders its template' do
         fulfill 'jobs#edit render template'
         expect(response).to render_template('jobs/edit')
+      end
+
+      it 'assigns statuses as @statuses' do
+        fulfill 'jobs#edit assign @statuses'
+        expect(assigns(:statuses)).to eq(statuses.keys)
       end
 
       context 'when Job exists' do

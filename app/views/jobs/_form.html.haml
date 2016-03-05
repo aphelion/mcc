@@ -3,4 +3,7 @@
     = f.label :name
     = f.text_field :name
   %div
+    = f.label :status
+    = f.select :status, options_for_select(@statuses, selected: @job.status)
+  %div
     = f.submit

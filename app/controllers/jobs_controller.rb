@@ -6,6 +6,7 @@ class JobsController < ApplicationController
 
   def new
     @job = model.new
+    @statuses = model.statuses.keys
   end
 
   def create
@@ -19,6 +20,7 @@ class JobsController < ApplicationController
 
   def edit
     @job = model.find(params[:id])
+    @statuses = model.statuses.keys
   end
 
   def update
@@ -32,6 +34,6 @@ class JobsController < ApplicationController
 
   private
     def job_params
-      params.require(:job).permit(:name)
+      params.require(:job).permit(:name, :status)
     end
 end
