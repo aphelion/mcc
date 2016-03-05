@@ -143,7 +143,7 @@ describe JobsController do
     end
 
     describe 'PUT update' do
-      let(:job) { Job.first }
+      let(:job) { Job.create(valid_attributes) }
 
       context 'with valid updated attributes' do
         it 'updates the Job, and redirects to the Job' do
