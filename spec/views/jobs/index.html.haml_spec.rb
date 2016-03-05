@@ -1,14 +1,22 @@
 describe 'jobs/index.html.haml' do
-  let(:job) { double(:job) }
-  let(:jobs) { [job, job] }
+  let(:jobs) { all_fixtures(:jobs) }
 
   before do
-    stipulate(job).must receive(:name).and_return('job name')
     assign_contract('jobs#index', :jobs, jobs)
     render_contract('jobs#index')
   end
 
   it 'lists all Jobs' do
-    expect(rendered).to include('job name')
+    contract 'job.name -> ""'
+
+    jobs.each do |job|
+      expect(rendered).to include(job.name)
+    end
+  end
+
+  it 'links to all Jobs' do
+    jobs.each do |job|
+      assert_select 'a', text: job.name, href: job
+    end
   end
 end
