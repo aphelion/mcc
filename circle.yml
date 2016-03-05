@@ -1,5 +1,9 @@
 deployment:
   staging:
     branch: master
-    heroku:
-      appname: aphelion-mcc-staging
+    commands:
+      - heroku maintenance:on -a aphelion-mcc-staging
+      - git push git@heroku.com:aphelion-mcc-staging.git $CIRCLE_SHA1:master
+      - heroku run rake db:migrate -a aphelion-mcc-staging
+      - heroku restart -a aphelion-mcc-staging
+      - heroku maintenance:off -a aphelion-mcc-staging
