@@ -14,7 +14,18 @@ describe Job do
     end
   end
 
-  context 'class functions' do
+  context 'instance methods' do
+    let(:job) { jobs(:job_1) }
+
+    describe '.save' do
+      it 'returns true on success' do
+        fulfill 'job.save -> ?'
+        expect(job.save).to eq(true)
+      end
+    end
+  end
+
+  context 'class methods' do
     describe '.all' do
       let(:jobs) { all_fixtures(:jobs) }
 
@@ -35,18 +46,11 @@ describe Job do
           agree(Job, :new, valid_attributes).will be_a(Job)
         end
       end
-
     end
 
-    describe '.create' do
-      it 'creates a new Job' do
-        expect {
-          Job.create(valid_attributes)
-        }.to change(Job, :count).by(1)
-      end
-
-      it 'returns a job' do
-        agree(Job, :create, valid_attributes).will be_a(Job)
+    describe '.find' do
+      it 'finds a Job by id' do
+        agree(Job, :find, '1').will be_a(Job)
       end
     end
   end

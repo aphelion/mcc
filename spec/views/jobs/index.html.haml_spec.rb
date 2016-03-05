@@ -8,7 +8,7 @@ describe 'jobs/index.html.haml' do
     render_contract('jobs#index')
   end
 
-  it 'lists all jobs' do
+  it 'lists all Jobs' do
     expect(rendered).to include('job name')
   end
 end

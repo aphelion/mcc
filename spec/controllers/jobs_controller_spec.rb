@@ -61,24 +61,65 @@ describe JobsController do
 
     describe 'POST create' do
       context 'with valid attributes' do
-        it 'creates the Job and redirects to the Job index' do
-          stipulate(model).must receive(:create).with(valid_attributes).and_return(job)
+        let(:job) { Job.new(valid_attributes) }
+
+        it 'creates the Job, saves the Job, and redirects to the Job' do
+          stipulate(model).must receive(:new).with(valid_attributes).and_return(job)
+          contract('job.save -> ?')
+          expect(job).to receive(:save).and_return(true)
 
           contract('POST -> jobs#create')
           post :create, params: {job: valid_attributes}
 
-          expect(response).to redirect_to(jobs_url)
+          expect(response).to redirect_to(job)
         end
       end
 
       context 'with extra attributes' do
-        it 'filters the extra attributes, creates the Job and redirects to the Job index' do
-          stipulate(model).must receive(:create).with(valid_attributes).and_return(job)
+        let(:job) { Job.new(valid_attributes) }
+
+        it 'filters the extra attributes, creates the Job, and redirects to the Job' do
+          stipulate(model).must receive(:new).with(valid_attributes).and_return(job)
+          contract('job.save -> ?')
+          expect(job).to receive(:save).and_return(true)
 
           contract('POST -> jobs#create')
           post :create, params: {job: extra_attributes}
 
-          expect(response).to redirect_to(jobs_url)
+          expect(response).to redirect_to(job)
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'creates the Job, tries to save the Job, and redirects the Job to the new Job page' do
+          stipulate(model).must receive(:new).with(valid_attributes).and_return(job)
+          contract('job.save -> ?')
+          expect(job).to receive(:save).and_return(false)
+
+          contract('POST -> jobs#create')
+          post :create, params: {job: extra_attributes}
+
+          expect(response).to redirect_to(new_job_url)
+          expect(assigns(:job)).to eq(job)
+        end
+      end
+    end
+
+    describe 'GET show' do
+      before do
+        stipulate(model).must receive(:find).with('1').and_return(job)
+        get :show, params: {id: 1}
+      end
+
+      it 'renders its template' do
+        fulfill 'jobs#show render template'
+        expect(response).to render_template('jobs/show')
+      end
+
+      context 'when Job exists' do
+        it 'assigns the found Job as @job' do
+          fulfill 'jobs#show assign @job'
+          expect(assigns(:job)).to eq(job)
         end
       end
     end

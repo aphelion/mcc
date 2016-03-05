@@ -9,8 +9,12 @@ class JobsController < ApplicationController
   end
 
   def create
-    model.create(job_params)
-    redirect_to jobs_url
+    @job = model.new(job_params)
+    redirect_to @job.save ? @job : new_job_url
+  end
+
+  def show
+    @job = model.find(params[:id])
   end
 
   def model
