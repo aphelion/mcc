@@ -10,11 +10,20 @@ class JobsController < ApplicationController
 
   def create
     @job = model.new(job_params)
-    redirect_to @job.save ? @job : new_job_url
+    redirect_to @job.save ? @job : new_job_path
   end
 
   def show
     @job = model.find(params[:id])
+  end
+
+  def edit
+    @job = model.find(params[:id])
+  end
+
+  def update
+    @job = model.find(params[:id])
+    redirect_to @job.update(job_params) ? @job : new_job_path
   end
 
   def model

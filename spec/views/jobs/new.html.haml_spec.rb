@@ -8,7 +8,7 @@ describe 'jobs/new.html.haml' do
 
   describe 'form composition' do
     it 'renders an input for name' do
-      assert_select('input#job_name')
+      assert_select 'input#job_name'
     end
 
     it 'renders a submit button' do

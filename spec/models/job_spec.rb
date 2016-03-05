@@ -1,10 +1,9 @@
 require 'support/fixture_helpers'
+require 'support/job_attributes'
 
 describe Job do
   fixtures(:jobs)
-  let(:valid_attributes) do
-    {name: 'a job'}
-  end
+  let(:valid_attributes) { JobAttributes.valid_attributes }
 
   context 'instance attributes' do
     let(:job) { jobs(:job_1) }
@@ -21,6 +20,13 @@ describe Job do
       it 'returns true on success' do
         fulfill 'job.save -> ?'
         expect(job.save).to eq(true)
+      end
+    end
+
+    describe '.update' do
+      it 'returns true on success' do
+        fulfill 'job.update -> ?'
+        expect(job.update(valid_attributes)).to eq(true)
       end
     end
   end

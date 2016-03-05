@@ -10,4 +10,8 @@ describe 'jobs/show.html.haml' do
   it 'shows the Job' do
     expect(rendered).to include(job.name)
   end
+
+  it 'links to the Job edit page' do
+    assert_select 'a', href: edit_job_path(job)
+  end
 end
