@@ -6,3 +6,15 @@ job_2:
   id: 2
   name: 'job 2'
   status: 'failed'
+never_run:
+  id: 3
+  name: 'job 1'
+  status: 'never_run'
+passed:
+  id: 4
+  name: 'job 2'
+  status: 'passed'
+failed:
+  id: 5
+  name: 'job 2'
+  status: 'failed'
