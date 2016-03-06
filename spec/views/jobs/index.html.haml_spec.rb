@@ -10,4 +10,8 @@ describe 'jobs/index.html.haml' do
     contract '_job renders job'
     expect(view).to have_rendered(partial: '_job', count: jobs.count)
   end
+
+  it 'links to the new Job page' do
+    assert_select 'a', 'New Job', href: new_job_path
+  end
 end

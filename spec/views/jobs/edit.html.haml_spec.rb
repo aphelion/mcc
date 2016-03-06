@@ -26,6 +26,10 @@ describe 'jobs/edit.html.haml' do
       assert_select 'input[type=?]', 'submit'
     end
 
+    it 'renders a cancel button' do
+      assert_select 'a', 'Cancel', href: job_path(job)
+    end
+
     it 'submits POST to job' do
       fulfill 'POST -> jobs#create'
       assert_select 'form[action=?][method=?]', job_path(job), 'post'
