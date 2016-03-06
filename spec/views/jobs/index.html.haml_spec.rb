@@ -11,12 +11,8 @@ describe 'jobs/index.html.haml' do
 
     jobs.each do |job|
       expect(rendered).to include(job.name)
-    end
-  end
-
-  it 'links to all Jobs' do
-    jobs.each do |job|
-      assert_select 'a', text: job.name, href: job
+      assert_select 'a', text: 'Edit', href: edit_job_path(job)
+      assert_select 'a', text: 'Display', href: display_job_path(job)
     end
   end
 end
