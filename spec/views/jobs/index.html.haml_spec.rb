@@ -6,13 +6,8 @@ describe 'jobs/index.html.haml' do
     render_contract('jobs#index')
   end
 
-  it 'lists all Jobs' do
-    contract 'job.name -> ""'
-
-    jobs.each do |job|
-      expect(rendered).to include(job.name)
-      assert_select 'a', text: 'Edit', href: edit_job_path(job)
-      assert_select 'a', text: 'Display', href: display_job_path(job)
-    end
+  it 'renders all Jobs with the Job partial' do
+    contract '_job renders job'
+    expect(view).to have_rendered(partial: '_job', count: jobs.count)
   end
 end

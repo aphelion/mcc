@@ -7,19 +7,8 @@ describe 'jobs/show.html.haml' do
     render_contract('jobs#show')
   end
 
-  it 'shows the Job' do
-    contract 'job.name -> ""'
-    contract 'job.status -> ""'
-
-    expect(rendered).to include(job.name)
-    expect(rendered).to include(job.status.humanize(capitalize: false))
-  end
-
-  it 'links to the Job edit page' do
-    assert_select 'a', 'Edit', href: edit_job_path(job)
-  end
-
-  it 'links to the Job display page' do
-    assert_select 'a', 'Display', href: display_job_path(job)
+  it 'renders the Job with its partial' do
+    contract '_job renders job'
+    expect(view).to have_rendered(partial: '_job')
   end
 end
