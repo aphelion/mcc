@@ -184,5 +184,24 @@ describe JobsController do
         end
       end
     end
+
+    describe 'GET display' do
+      before do
+        stipulate(model).must receive(:find).with('1').and_return(job)
+        get :display, params: {id: 1}
+      end
+
+      it 'renders its template' do
+        fulfill 'jobs#display render template'
+        expect(response).to render_template('jobs/display')
+      end
+
+      context 'when Job exists' do
+        it 'assigns the found Job as @job' do
+          fulfill 'jobs#display assign @job'
+          expect(assigns(:job)).to eq(job)
+        end
+      end
+    end
   end
 end
