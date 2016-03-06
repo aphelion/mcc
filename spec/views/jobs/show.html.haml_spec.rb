@@ -16,6 +16,10 @@ describe 'jobs/show.html.haml' do
   end
 
   it 'links to the Job edit page' do
-    assert_select 'a', href: edit_job_path(job)
+    assert_select 'a', 'Edit', href: edit_job_path(job)
+  end
+
+  it 'links to the Job display page' do
+    assert_select 'a', 'Display', href: display_job_path(job)
   end
 end

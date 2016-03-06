@@ -1,3 +1,5 @@
 %div= @job.name
 %div= @job.status.humanize(capitalize: false)
-%p= link_to 'Edit', edit_job_path(@job)
+%p
+  = link_to 'Edit', edit_job_path(@job)
+  = link_to 'Display', display_job_path(@job)
