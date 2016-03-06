@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: redirect('/jobs')
+
   resources :jobs , only: [:index, :new, :create, :show, :edit, :update] do
     member do
       get 'display'
