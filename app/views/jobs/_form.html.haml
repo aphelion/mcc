@@ -4,6 +4,6 @@
     = f.text_field :name
   %div
     = f.label :status
-    = f.select :status, options_for_select(@statuses, selected: @job.status)
+    = f.select :status, options_for_select(@statuses.collect { |s| [s.humanize(capitalize: false), s] }, selected: @job.status)
   %div
     = f.submit

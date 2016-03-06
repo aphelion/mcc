@@ -16,6 +16,9 @@ describe 'jobs/edit.html.haml' do
 
     it 'renders a pre-selected select for status' do
       assert_select 'select#job_status'
+      statuses.each do |status|
+        assert_select 'select#job_status option[value=?]', status, {text: status.humanize(capitalize: false)}
+      end
       assert_select 'select#job_status option[selected][value=?]', 'passed'
     end
 
