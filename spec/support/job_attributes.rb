@@ -20,6 +20,6 @@ module JobAttributes
   end
 
   def self.statuses
-    {passed: 0, failed: 1}.stringify_keys
+    {never_run: 0, passed: 1, failed: 2}.stringify_keys
   end
 end

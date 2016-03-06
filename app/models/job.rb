@@ -1,3 +1,3 @@
 class Job < ApplicationRecord
-  enum status: [:passed, :failed]
+  enum status: [:never_run, :passed, :failed]
 end
