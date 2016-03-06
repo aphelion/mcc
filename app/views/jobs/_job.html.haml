@@ -1,5 +1,6 @@
 %h1
   = job.name
-  %span.label.label-default= job.status.humanize(capitalize: false)
+  %span.label{class: (job_status_label_class(job))}
+    = job.status.humanize(capitalize: false)
   = link_to 'Edit', edit_job_path(job), class: 'btn btn-secondary'
   = link_to 'Display', display_job_path(job), class: 'btn btn-primary'
