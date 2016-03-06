@@ -8,7 +8,7 @@ describe 'jobs/show.html.haml' do
   end
 
   it 'renders the Job with its partial' do
-    contract '_job renders job'
-    expect(view).to have_rendered(partial: '_job')
+    contract 'jobs/_job renders job'
+    expect(view).to have_rendered(partial: 'jobs/_job', locals: {job: job})
   end
 end

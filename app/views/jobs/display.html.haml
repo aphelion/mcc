@@ -1,2 +1,1 @@
-.card.card-block.text-xs-center{class: (job_card_class(@job))}
-  %h1= @job.name
+= render partial: 'jobs/display', locals: {job: @job}

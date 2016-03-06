@@ -2,7 +2,7 @@ describe 'jobs/_job.html.haml' do
   fixtures(:jobs)
 
   def do_render(job)
-    fulfill '_job renders job'
+    fulfill 'jobs/_job renders job'
     render partial: 'job', locals: {job: job}
   end
 

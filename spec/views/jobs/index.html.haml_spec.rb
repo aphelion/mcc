@@ -7,8 +7,8 @@ describe 'jobs/index.html.haml' do
   end
 
   it 'renders all Jobs with the Job partial' do
-    contract '_job renders job'
-    expect(view).to have_rendered(partial: '_job', count: jobs.count)
+    contract 'jobs/_job renders job'
+    expect(view).to have_rendered(partial: 'jobs/_job', count: jobs.count)
   end
 
   it 'links to the new Job page' do
