@@ -1,9 +1,15 @@
 = form_for @job do |f|
-  %div
-    = f.label :name
-    = f.text_field :name
-  %div
-    = f.label :status
-    = f.select :status, options_for_select(@statuses.collect { |s| [s.humanize(capitalize: false), s] }, selected: @job.status)
-  %div
-    = f.submit
+  .form-group.row
+    = f.label :name, class: 'col-sm-2 form-control-label'
+    .col-sm-10
+      = f.text_field :name, class: 'form-control'
+  .form-group.row
+    = f.label :status, class: 'col-sm-2 form-control-label'
+    .col-sm-10
+      = f.select :status,
+                 options_for_select(@statuses.collect { |s| [s.humanize(capitalize: false), s] }, selected: @job.status),
+                 {},
+                 {class: 'form-control c-select'}
+  .form-group.row
+    .col-sm-offset-2.col-sm-10
+      = f.submit nil, {class: 'btn btn-primary'}
