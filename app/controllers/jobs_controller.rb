@@ -11,7 +11,7 @@ class JobsController < ApplicationController
 
   def create
     @job = model.new(job_params)
-    redirect_to @job.save ? @job : new_job_path
+    redirect_to @job.save ? jobs_path : new_job_path
   end
 
   def show
@@ -25,7 +25,7 @@ class JobsController < ApplicationController
 
   def update
     @job = model.find(params[:id])
-    redirect_to @job.update(job_params) ? @job : new_job_path
+    redirect_to @job.update(job_params) ? jobs_path : new_job_path
   end
 
   def display

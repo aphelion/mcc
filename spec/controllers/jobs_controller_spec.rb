@@ -69,7 +69,7 @@ describe JobsController do
       context 'with valid attributes' do
         let(:job) { Job.new(valid_attributes) }
 
-        it 'creates a Job, saves the Job, and redirects to the Job' do
+        it 'creates a Job, saves the Job, and redirects to the Jobs page' do
           stipulate(model).must receive(:new).with(valid_attributes).and_return(job)
           contract('job.save -> ?')
           expect(job).to receive(:save).and_return(true)
@@ -77,14 +77,14 @@ describe JobsController do
           contract('POST -> jobs#create')
           post :create, params: {job: valid_attributes}
 
-          expect(response).to redirect_to(job)
+          expect(response).to redirect_to(jobs_path)
         end
       end
 
       context 'with extra attributes' do
         let(:job) { Job.new(valid_attributes) }
 
-        it 'filters the extra attributes, creates a Job, saves the Job, and redirects to the Job' do
+        it 'filters the extra attributes, creates a Job, saves the Job, and redirects to the Jobs page' do
           stipulate(model).must receive(:new).with(valid_attributes).and_return(job)
           contract('job.save -> ?')
           expect(job).to receive(:save).and_return(true)
@@ -92,7 +92,7 @@ describe JobsController do
           contract('POST -> jobs#create')
           post :create, params: {job: extra_attributes}
 
-          expect(response).to redirect_to(job)
+          expect(response).to redirect_to(jobs_path)
         end
       end
 
@@ -159,7 +159,7 @@ describe JobsController do
       let(:job) { Job.create(valid_attributes) }
 
       context 'with valid updated attributes' do
-        it 'updates the Job, and redirects to the Job' do
+        it 'updates the Job, and redirects to the Jobs page' do
           stipulate(model).must receive(:find).with('1').and_return(job)
           contract 'job.update -> ?'
           expect(job).to receive(:update).with(updated_valid_attributes).and_return(true)
@@ -167,12 +167,12 @@ describe JobsController do
           contract 'POST -> jobs#create'
           put :update, params: {id: '1', job: updated_valid_attributes}
 
-          expect(response).to redirect_to(job)
+          expect(response).to redirect_to(jobs_path)
         end
       end
 
       context 'with invalid updated attributes' do
-        it 'updates the Job, and redirects to the Job' do
+        it 'updates the Job, and redirects the Job to the new Job page' do
           stipulate(model).must receive(:find).with('1').and_return(job)
           contract 'job.update -> ?'
           expect(job).to receive(:update).with(updated_invalid_attributes).and_return(false)
