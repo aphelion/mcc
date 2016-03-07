@@ -1,7 +1,8 @@
 describe 'JobDisplayChannel' do
   it 'broadcasts Job updates to subscribers' do
-    fulfill 'Job updates are streamed to JobDisplayChannel(job: id)'
+    fulfill 'Job events are streamed to JobDisplayChannel(job: id)'
     contract 'Job updates are broadcast by id to JobDisplayChannel'
+    contract 'Job destroys are broadcast by id to JobDisplayChannel'
 
     #             ______________
     #       ,===:'.,            `-._

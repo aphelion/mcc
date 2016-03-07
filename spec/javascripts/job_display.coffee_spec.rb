@@ -1,7 +1,7 @@
 describe 'channels/job_display.coffee' do
   it 'syncs Job displays with updates from JobDisplayChannel' do
     fulfill 'data-job-display is kept up-to-date'
-    contract 'Job updates are streamed to JobDisplayChannel(job: id)'
+    contract 'Job events are streamed to JobDisplayChannel(job: id)'
 
     #             ______________
     #       ,===:'.,            `-._

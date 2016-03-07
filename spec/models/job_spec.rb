@@ -88,17 +88,16 @@ describe Job do
   end
 
   context 'events' do
+    # Copied from rspec/rspec-rails master.
+    # Will be available through the rspec-rails dependency when we can upgrade rspec-rails.
+    require 'support/active_job'
+
+    before do
+      ActiveJob::Base.queue_adapter = :test
+    end
+
     describe '.update' do
-
       it { fulfill 'Jobs are enqueued to to a JobUpdateBroadcastJob on update' }
-
-      # Copied from rspec/rspec-rails master.
-      # Will be available through the rspec-rails dependency when we can upgrade rspec-rails.
-      require 'support/active_job'
-
-      before do
-        ActiveJob::Base.queue_adapter = :test
-      end
 
       it 'creates a Job to broadcast the update' do
         @updatedJob
@@ -106,6 +105,19 @@ describe Job do
           @updatedJob = jobs(:job_1).update(valid_attributes)
         }.to have_enqueued_job(JobUpdateBroadcastJob)
                  .with(@updatedJob)
+      end
+    end
+
+    describe '.destroy' do
+      it { fulfill 'Job ids are enqueued to to a JobDestroyBroadcastJob on destroy' }
+
+      let(:job) { jobs(:job_1) }
+
+      it 'creates a Job to broadcast the destroy' do
+        expect {
+          job.destroy
+        }.to have_enqueued_job(JobDestroyBroadcastJob)
+                 .with(job.id)
       end
     end
   end

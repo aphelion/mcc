@@ -8,8 +8,8 @@ describe JobUpdateBroadcastJob do
   describe '.perform' do
 
     before do
-      allow(ApplicationController). to receive(:renderer).and_return(renderer)
-      allow(ActionCable). to receive(:server).and_return(server)
+      allow(ApplicationController).to receive(:renderer).and_return(renderer)
+      allow(ActionCable).to receive(:server).and_return(server)
     end
 
     it { fulfills 'Job updates are broadcast by id to JobDisplayChannel' }
@@ -26,9 +26,9 @@ describe JobUpdateBroadcastJob do
                               .with(partial: 'jobs/job', locals: {job: job})
                               .and_return(job_html)
       expect(server).to receive(:broadcast)
-                            .with('job_display_1', html: job_display_html)
+                            .with('job_display_1', event: 'update', html: job_display_html)
       expect(server).to receive(:broadcast)
-                            .with('job_1', html: job_html)
+                            .with('job_1', event: 'update', html: job_html)
 
       subject.perform(job)
     end

@@ -9,12 +9,19 @@ $(document).on 'turbolinks:load', ->
       disconnected: ->
 
       received: (data) ->
-        jobUpdate = $(data['html'])
+        switch data['event']
+          when 'update'
+            jobUpdate = $(data['html'])
 
-        job.fadeOut ->
-          job.replaceWith ->
-            jobUpdate.hide().fadeIn()
-            job = jobUpdate
+            job.fadeOut ->
+              job.replaceWith ->
+                job = jobUpdate
+                jobUpdate.hide().fadeIn()
+          when 'destroy'
+            App.cable.subscriptions.remove(subscription)
+            job.fadeTo 400, 0, ->
+              job.slideUp ->
+                job.remove()
 
     $(document).one 'turbolinks:visit', ->
       App.cable.subscriptions.remove(subscription)

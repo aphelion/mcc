@@ -2,8 +2,12 @@ class JobUpdateBroadcastJob < ApplicationJob
   queue_as :default
 
   def perform(job)
-    ActionCable.server.broadcast "job_display_#{job.id}", html: render_job_display(job)
-    ActionCable.server.broadcast "job_#{job.id}", html: render_job(job)
+    ActionCable.server.broadcast "job_display_#{job.id}",
+                                 event: 'update',
+                                 html: render_job_display(job)
+    ActionCable.server.broadcast "job_#{job.id}",
+                                 event: 'update',
+                                 html: render_job(job)
   end
 
   private
