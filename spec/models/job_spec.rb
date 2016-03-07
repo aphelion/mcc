@@ -78,4 +78,27 @@ describe Job do
       end
     end
   end
+
+  context 'events' do
+    describe '.update' do
+
+      it { fulfill 'Jobs are enqueued to to a JobUpdateBroadcastJob on update' }
+
+      # Copied from rspec/rspec-rails master.
+      # Will be available through the rspec-rails dependency when we can upgrade rspec-rails.
+      require 'support/active_job'
+
+      before do
+        ActiveJob::Base.queue_adapter = :test
+      end
+
+      it 'creates a Job to broadcast the update' do
+        @updatedJob
+        expect {
+          @updatedJob = jobs(:job_1).update(valid_attributes)
+        }.to have_enqueued_job(JobUpdateBroadcastJob)
+                 .with(@updatedJob)
+      end
+    end
+  end
 end
