@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: mcc_production
-  username: mcc
-  password: <%= ENV['MCC_DATABASE_PASSWORD'] %>
+  url: <%= ENV["DATABASE_URL"] %>
