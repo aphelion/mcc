@@ -14,10 +14,6 @@ class JobsController < ApplicationController
     redirect_to @job.save ? jobs_path : new_job_path
   end
 
-  def show
-    @job = model.find(params[:id])
-  end
-
   def edit
     @job = model.find(params[:id])
     @statuses = model.statuses.keys
