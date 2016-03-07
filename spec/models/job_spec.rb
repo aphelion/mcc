@@ -41,6 +41,14 @@ describe Job do
         expect(job.update(valid_attributes)).to eq(true)
       end
     end
+
+    describe '.destroy' do
+      it 'returns true on success' do
+        fulfill 'job.destroy works'
+        job.destroy
+        expect(job.destroyed?).to eq(true)
+      end
+    end
   end
 
   context 'class methods' do

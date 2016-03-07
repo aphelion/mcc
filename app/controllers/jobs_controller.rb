@@ -28,6 +28,12 @@ class JobsController < ApplicationController
     @job = model.find(params[:id])
   end
 
+  def destroy
+    @job = model.find(params[:id])
+    @job.destroy
+    redirect_to jobs_path
+  end
+
   def model
     Job
   end

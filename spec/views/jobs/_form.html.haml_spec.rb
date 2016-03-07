@@ -37,30 +37,43 @@ describe 'jobs/_form.html.haml' do
     end
 
     context 'when cancel_path is not supplied' do
-      it 'renders a cancel button' do
+      it 'does not render a cancel button' do
         render partial: 'jobs/form', locals: {job: job, statuses: statuses}
         assert_select 'a', {text: 'Cancel', count: 0}
       end
     end
   end
 
-  describe 'form submission' do
+  context 'when Job is new' do
     let(:job) { Job.new }
-    context 'when Job is new' do
-      it 'submits POST to jobs' do
-        render partial: 'jobs/form', locals: {job: job, statuses: statuses}
-        fulfill 'POST -> jobs#create'
-        assert_select 'form[action=?][method=?]', jobs_path, 'post'
-      end
+
+    before do
+      render partial: 'jobs/form', locals: {job: job, statuses: statuses}
     end
 
-    context 'when Job already exists' do
-      let(:job) { jobs(:job_1) }
-      it 'submits POST to job' do
-        render partial: 'jobs/form', locals: {job: job, statuses: statuses}
-        fulfill 'POST -> jobs#create'
-        assert_select 'form[action=?][method=?]', job_path(job), 'post'
-      end
+    it 'submits POST to jobs' do
+      assert_select 'form[action=?][method=?]', jobs_path, 'post'
+    end
+
+    it 'does not render a delete button' do
+      assert_select 'a', {text: 'Delete', count: 0}
+    end
+  end
+
+  context 'when Job already exists' do
+    let(:job) { jobs(:job_1) }
+
+    before do
+      render partial: 'jobs/form', locals: {job: job, statuses: statuses}
+    end
+
+    it 'submits POST to job' do
+      assert_select 'form[action=?][method=?]', job_path(job), 'post'
+    end
+
+    it 'renders a delete button' do
+      contract 'DELETE /jobs/#'
+      assert_select 'a', 'Delete', {method: :delete, href: job_path(job)}
     end
   end
 end

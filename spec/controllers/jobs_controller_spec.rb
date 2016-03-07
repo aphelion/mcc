@@ -74,7 +74,6 @@ describe JobsController do
           contract('job.save -> ?')
           expect(job).to receive(:save).and_return(true)
 
-          contract('POST -> jobs#create')
           post :create, params: {job: valid_attributes}
 
           expect(response).to redirect_to(jobs_path)
@@ -89,7 +88,6 @@ describe JobsController do
           contract('job.save -> ?')
           expect(job).to receive(:save).and_return(true)
 
-          contract('POST -> jobs#create')
           post :create, params: {job: extra_attributes}
 
           expect(response).to redirect_to(jobs_path)
@@ -102,7 +100,6 @@ describe JobsController do
           contract('job.save -> ?')
           expect(job).to receive(:save).and_return(false)
 
-          contract('POST -> jobs#create')
           post :create, params: {job: extra_attributes}
 
           expect(response).to redirect_to(new_job_path)
@@ -145,7 +142,6 @@ describe JobsController do
           contract 'job.update -> ?'
           expect(job).to receive(:update).with(updated_valid_attributes).and_return(true)
 
-          contract 'POST -> jobs#create'
           put :update, params: {id: '1', job: updated_valid_attributes}
 
           expect(response).to redirect_to(jobs_path)
@@ -158,7 +154,6 @@ describe JobsController do
           contract 'job.update -> ?'
           expect(job).to receive(:update).with(updated_invalid_attributes).and_return(false)
 
-          contract 'POST -> jobs#create'
           put :update, params: {id: '1', job: updated_invalid_attributes}
 
           expect(response).to redirect_to(new_job_path)
@@ -181,6 +176,29 @@ describe JobsController do
         it 'assigns the found Job as @job' do
           fulfill 'jobs#display assign @job'
           expect(assigns(:job)).to eq(job)
+        end
+      end
+    end
+
+    describe 'DELETE destroy' do
+
+      context 'when Job exists' do
+        before do
+          stipulate(model).must receive(:find).with('1').and_return(job)
+        end
+
+        context 'when delete succeeds' do
+          before do
+            contract 'job.destroy works'
+            expect(job).to receive(:destroy)
+          end
+
+          it 'deletes the Job and redirects to the Jobs index' do
+            fulfill 'delete jobs#destroy {"id"=>"1"}'
+            delete :destroy, params: {id: 1}
+
+            expect(response).to redirect_to(jobs_path)
+          end
         end
       end
     end
