@@ -10,8 +10,11 @@ $(document).on 'turbolinks:load', ->
 
       received: (data) ->
         jobDisplayUpdate = $(data['html'])
-        jobDisplay.replaceWith jobDisplayUpdate
-        jobDisplay = jobDisplayUpdate
+
+        jobDisplay.fadeOut ->
+          jobDisplay.replaceWith ->
+            jobDisplayUpdate.hide().fadeIn()
+            jobDisplay = jobDisplayUpdate
 
     $(document).one 'turbolinks:visit', ->
       App.cable.subscriptions.remove(subscription)

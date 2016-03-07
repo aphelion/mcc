@@ -1,4 +1,4 @@
-%h1
+%h1{data: {job: job.id}}
   = job.name
   %span.label{class: (job_status_label_class(job))}
     = job.status.humanize(capitalize: false)

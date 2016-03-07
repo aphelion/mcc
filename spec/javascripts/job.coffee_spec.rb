@@ -1,7 +1,7 @@
-describe 'JobDisplayChannel' do
-  it 'broadcasts Job updates to subscribers' do
-    fulfill 'Job updates are streamed to JobDisplayChannel(job: id)'
-    contract 'Job updates are broadcast by id to JobDisplayChannel'
+describe 'channels/job.coffee' do
+  it 'syncs Jobs with updates from JobChannel' do
+    fulfill 'data-job is kept up-to-date'
+    contract 'Job updates are streamed to JobChannel(job: id)'
 
     #             ______________
     #       ,===:'.,            `-._

@@ -58,4 +58,14 @@ describe 'jobs/_job.html.haml' do
       end
     end
   end
+
+  describe 'live updating' do
+    let(:job) { jobs('job_1') }
+
+    it 'refreshes when the Job has updates' do
+      contract 'data-job is kept up-to-date'
+      do_render(job)
+      assert_select '[data-job=?]', job.id.to_s
+    end
+  end
 end

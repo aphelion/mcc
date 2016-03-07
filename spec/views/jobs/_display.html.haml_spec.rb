@@ -43,7 +43,7 @@ describe 'jobs/_display.html.haml' do
     let(:job) { jobs('job_1') }
 
     it 'refreshes when the Job has updates' do
-      contract 'job-display is kept up-to-date'
+      contract 'data-job-display is kept up-to-date'
       do_render(job)
       assert_select '[data-job-display=?]', job.id.to_s
     end
