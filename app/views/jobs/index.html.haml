@@ -1,3 +1,4 @@
-.text-xs-right
+%p.text-xs-right
   = link_to 'New Job', new_job_path, class: 'btn btn-secondary'
+= render partial: 'jobs/table', locals: {jobs: @jobs}
 = render @jobs

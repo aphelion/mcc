@@ -1,0 +1,5 @@
+%table.table
+  = render 'jobs/table/header'
+  %tbody
+    - jobs.each do |job|
+      = render 'jobs/table/row', job: job
