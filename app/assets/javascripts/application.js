@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require tether
+//= require moment.js
 //= require bootstrap
+//= require bootstrap-sortable
 //= require turbolinks
 //= require_tree .

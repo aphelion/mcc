@@ -17,5 +17,4 @@ module JobsHelper
   def job_status_css_color(status)
     STATUS_HASH[status]
   end
-
 end

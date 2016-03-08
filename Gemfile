@@ -23,13 +23,16 @@ gem 'turbolinks', '~> 5.x'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
+gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'haml'
 gem 'bootstrap', '~> 4.0.0.alpha3'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
+  gem 'rails-assets-bootstrap-sortable'
+  gem 'rails-assets-momentjs'
 end
 
 # Use Capistrano for deployment
@@ -55,7 +58,6 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'redis'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

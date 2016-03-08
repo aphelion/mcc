@@ -11,13 +11,21 @@ describe 'jobs/_table.html.haml' do
     render partial: 'jobs/table', locals: {jobs: jobs}
   end
 
-  it 'renders the header in a table' do
-    assert_select 'table thead'
-    expect(view).to have_rendered(partial: 'jobs/table/_header')
+  describe 'structure' do
+    it 'renders the header in a table' do
+      assert_select 'table thead'
+      expect(view).to have_rendered(partial: 'jobs/table/_header')
+    end
+
+    it 'renders the rows in a body in a table' do
+      assert_select 'table tbody tr', {count: jobs.count}
+      expect(view).to have_rendered(partial: 'jobs/table/_row', count: jobs.count)
+    end
   end
 
-  it 'renders the rows in a body in a table' do
-    assert_select 'table tbody tr', {count: jobs.count}
-    expect(view).to have_rendered(partial: 'jobs/table/_row', count: jobs.count)
+  describe 'sorting' do
+    it 'configures the table to be sortable' do
+      assert_select 'table.sortable'
+    end
   end
 end
