@@ -221,7 +221,7 @@ DEPENDENCIES
   rails-assets-bootstrap-sortable!
   rails-assets-momentjs!
   rails-assets-tether (>= 1.1.0)!
-  rails-controller-testing
+  rails-controller-testing (= 0.1.0)
   rails_12factor
   redis (~> 3.0)
   rspec-html-matchers

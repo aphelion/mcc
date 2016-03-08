@@ -43,7 +43,7 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
   gem 'rspec-html-matchers'
-  gem 'rails-controller-testing'
+  gem 'rails-controller-testing', '0.1.0'
   gem 'contractinator'
 end
 
