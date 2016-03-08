@@ -1,5 +1,7 @@
 # MCC
 
+[![Circle CI](https://circleci.com/gh/aphelion/mcc.svg?style=svg)](https://circleci.com/gh/aphelion/mcc)
+
 ## Heroku Configuration
 
 Add Redis
