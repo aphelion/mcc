@@ -3,9 +3,16 @@
   %head
     %title MCC
     = csrf_meta_tags
+    %meta{content: 'width=device-width, initial-scale=1, shrink-to-fit=no', name: 'viewport'}
     = action_cable_meta_tag
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track' => 'reload'
   %body
-    .container= yield
+    .container
+      %nav.navbar.navbar-light.bg-faded
+        = link_to 'MCC', '/', {class: 'navbar-brand'}
+        %ul.nav.navbar-nav
+          %li.nav-item{class: ('active' if current_page?(jobs_path))}
+            = link_to 'Jobs', jobs_path, class: 'nav-link'
+      = yield
