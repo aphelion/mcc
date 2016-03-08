@@ -1,8 +1,9 @@
 describe 'JobChannel' do
-  it 'broadcasts Job updates to subscribers' do
-    fulfill 'Job events are streamed to JobChannel(job: id)'
-    contract 'Job updates are broadcast by id to JobChannel'
-    contract 'Job destroys are broadcast by id to JobChannel'
+  it 'broadcasts Job events to subscribers' do
+    fulfill 'Job updates are streamed to JobChannel(job: id)'
+    fulfill 'Job destroys are streamed to JobChannel(job: id)'
+    contract 'Job updates are broadcast to job_#'
+    contract 'Job destroys are broadcast to job_#'
 
     #             ______________
     #       ,===:'.,            `-._

@@ -7,8 +7,8 @@ describe JobDestroyBroadcastJob do
       allow(ActionCable).to receive(:server).and_return(server)
     end
 
+    it { fulfill 'Job destroys are broadcast to job_#' }
     it { fulfills 'Job destroys are broadcast by id to JobDisplayChannel' }
-    it { fulfills 'Job destroys are broadcast by id to JobChannel' }
     it { contract 'Job ids are enqueued to to a JobDestroyBroadcastJob on destroy' }
 
     it 'broadcasts the Job as a rendered job display' do

@@ -6,11 +6,6 @@ describe 'jobs/index.html.haml' do
     render_contract('jobs#index')
   end
 
-  it 'renders all Jobs with the Job partial' do
-    contract 'jobs/_job renders job'
-    expect(view).to have_rendered(partial: 'jobs/_job', count: jobs.count)
-  end
-
   it 'renders all Jobs in a table' do
     contract 'jobs/_table renders jobs'
     expect(view).to have_rendered(partial: 'jobs/_table', locals: {jobs: jobs})
