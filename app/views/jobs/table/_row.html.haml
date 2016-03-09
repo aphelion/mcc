@@ -5,6 +5,6 @@
     %h3
       %span.label{class: (job_status_label_class(job))}
         = job.status.humanize(capitalize: false)
-  %td
+  %td.text-nowrap
     = link_to 'Edit', edit_job_path(job), class: 'btn btn-secondary'
     = link_to 'Launch', job_path(job), class: 'btn btn-primary'

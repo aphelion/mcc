@@ -37,6 +37,10 @@ describe 'jobs/table/_row.html.haml' do
       it 'renders a link to the Job show page' do
         assert_select 'tr td:nth-child(3) a', 'Launch', href: job_path(job)
       end
+
+      it 'keeps the action buttons together' do
+        assert_select 'tr td:nth-child(3).text-nowrap'
+      end
     end
   end
 
