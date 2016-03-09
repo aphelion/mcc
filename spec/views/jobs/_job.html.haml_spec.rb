@@ -19,22 +19,21 @@ describe 'jobs/_job.html.haml' do
     context 'when the build passed' do
       it 'is green' do
         do_render(jobs('passed'))
-        assert_select '.card-success'
+        assert_select '.job-status-passed'
       end
     end
 
     context 'when the build failed' do
       it 'is red' do
         do_render(jobs('failed'))
-        assert_select '.card-danger'
+        assert_select '.job-status-failed'
       end
     end
 
     context 'when the has never run' do
       it 'is white' do
         do_render(jobs('never_run'))
-        assert_select '.card-success', {count: 0}
-        assert_select '.card-danger', {count: 0}
+        assert_select '.job-status-never-run'
       end
     end
   end

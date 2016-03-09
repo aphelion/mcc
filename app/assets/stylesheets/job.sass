@@ -1,0 +1,26 @@
+@import "bootstrap/mixins"
+@import "bootstrap/variables"
+
+.job-status-passed
+  background-color: $brand-success
+.job-status-failed
+  background-color: $brand-danger
+.job-status-never-run
+  background-color: $gray-light
+
+.job-status-circle
+  display: inline-block
+  width: $font-size-lg
+  height: $font-size-lg
+  @include border-radius($font-size-lg / 2)
+
+.card
+  &.job-status-passed
+    @extend .job-status-passed
+    border-color: $brand-success
+  &.job-status-failed
+    @extend .job-status-failed
+    border-color: $brand-danger
+  &.job-status-never-run
+    @extend .job-status-never-run
+    border-color: $gray-light

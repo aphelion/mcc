@@ -17,4 +17,8 @@ module JobsHelper
   def job_status_css_color(status)
     STATUS_HASH[status]
   end
+
+  def job_status_class(job)
+    'job-status-' + job.status.dasherize
+  end
 end

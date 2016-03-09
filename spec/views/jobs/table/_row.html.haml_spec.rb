@@ -91,10 +91,10 @@ describe 'jobs/table/_row.html.haml' do
           end
         end
 
-        it 'shows the Job status' do
+        it 'shows the Job status as colored circles' do
           contract 'job.status -> ""'
           assert_select 'tr td:nth-child(4)' do
-            assert_select 'h3 >', {text: job.status.humanize(capitalize: false)}
+            assert_select ".job-status-circle.job-status-#{job.status.dasherize}"
           end
         end
       end

@@ -9,9 +9,9 @@
     = link_to 'Edit', edit_job_path(job), class: 'btn btn-secondary'
     = link_to 'Launch', job_path(job), class: 'btn btn-primary'
   %td.hidden-sm-up
-    %h3= job.name
+    %h3
+      %span.job-status-circle{class: job_status_class(job)}
+      = job.name
     %h3.text-nowrap
-      %span.label{class: (job_status_label_class(job))}
-        = job.status.humanize(capitalize: false)
       = link_to 'Edit', edit_job_path(job), class: 'btn btn-secondary'
       = link_to 'Launch', job_path(job), class: 'btn btn-primary'
