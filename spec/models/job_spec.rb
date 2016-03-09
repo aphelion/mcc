@@ -96,6 +96,18 @@ describe Job do
       ActiveJob::Base.queue_adapter = :test
     end
 
+    describe '.create' do
+      it { fulfill 'Jobs are enqueued to to a JobCreateBroadcastJob on create' }
+
+      it 'creates a Job to broadcaste the create' do
+        @createdJob
+        expect {
+          @createdJob = Job.create(valid_attributes)
+        }.to have_enqueued_job(JobCreateBroadcastJob)
+                 .with(@createdJob)
+      end
+    end
+
     describe '.update' do
       it { fulfill 'Jobs are enqueued to to a JobUpdateBroadcastJob on update' }
 

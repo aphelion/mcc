@@ -28,4 +28,11 @@ describe 'jobs/_table.html.haml' do
       assert_select 'table.sortable'
     end
   end
+
+  describe 'live updating' do
+    it 'receives new Jobs' do
+      contract 'data-job-table is kept up-to-date'
+      assert_select 'table[data-job-table]'
+    end
+  end
 end

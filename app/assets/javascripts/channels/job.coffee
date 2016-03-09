@@ -1,3 +1,23 @@
+# data-job-table
+$(document).on 'turbolinks:load', ->
+  $('[data-job-table]').each (index, element) ->
+    jobTableBody = $(element).find('tbody')
+
+    subscription = App.cable.subscriptions.create {channel: 'JobsChannel'},
+      connected: ->
+
+      disconnected: ->
+
+      received: (data) ->
+        switch data['event']
+          when 'create'
+            jobTableRow = $(data['html']['job_table_row'])
+            registerJobTableRow(jobTableRow)
+            jobTableRow.children('td, th').wrapInner('<div/>').children().hide()
+            jobTableBody.append(jobTableRow)
+            $.bootstrapSortable(true)
+            jobTableRow.children('td, th').children().slideDown()
+
 # data-job
 $(document).on 'turbolinks:load', ->
   $('[data-job]').each (index, element) ->
@@ -31,27 +51,30 @@ $(document).on 'turbolinks:load', ->
 $(document).on 'turbolinks:load', ->
   $('[data-job-table-row]').each (index, element) ->
     jobTableRow = $(element)
-    jobId = jobTableRow.data('job-table-row')
+    registerJobTableRow(jobTableRow)
 
-    subscription = App.cable.subscriptions.create {channel: 'JobChannel', job: jobId},
-      connected: ->
+registerJobTableRow = (jobTableRow) ->
+  jobId = jobTableRow.data('job-table-row')
 
-      disconnected: ->
+  subscription = App.cable.subscriptions.create {channel: 'JobChannel', job: jobId},
+    connected: ->
 
-      received: (data) ->
-        switch data['event']
-          when 'update'
-            jobTableRowUpdate = $(data['html']['job_table_row'])
+    disconnected: ->
 
-            jobTableRow.fadeOut ->
-              jobTableRow.replaceWith ->
-                jobTableRow = jobTableRowUpdate
-                jobTableRowUpdate.hide().fadeIn()
-          when 'destroy'
-            App.cable.subscriptions.remove(subscription)
-            jobTableRow.fadeTo 400, 0, ->
-              jobTableRow.children('td, th').animate(padding: 0).wrapInner('<div/>').children().slideUp ->
-                jobTableRow.remove()
+    received: (data) ->
+      switch data['event']
+        when 'update'
+          jobTableRowUpdate = $(data['html']['job_table_row'])
 
-    $(document).one 'turbolinks:visit', ->
-      App.cable.subscriptions.remove(subscription)
+          jobTableRow.fadeOut ->
+            jobTableRow.replaceWith ->
+              jobTableRow = jobTableRowUpdate
+              jobTableRowUpdate.hide().fadeIn()
+        when 'destroy'
+          App.cable.subscriptions.remove(subscription)
+          jobTableRow.fadeTo 400, 0, ->
+            jobTableRow.children('td, th').animate(padding: 0).wrapInner('<div/>').children().slideUp ->
+              jobTableRow.remove()
+
+  $(document).one 'turbolinks:visit', ->
+    App.cable.subscriptions.remove(subscription)
