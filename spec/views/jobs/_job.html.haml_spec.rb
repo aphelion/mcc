@@ -3,58 +3,38 @@ describe 'jobs/_job.html.haml' do
 
   def do_render(job)
     fulfill 'jobs/_job renders job'
-    render partial: 'job', locals: {job: job}
+    render partial: 'jobs/job', locals: {job: job}
   end
 
-  context 'any Job' do
+  describe 'Job text' do
     let(:job) { jobs('job_1') }
 
-    before do
+    it 'renders the Job name' do
       do_render(job)
-    end
-
-    describe 'show Job information' do
-      it 'shows the Job name' do
-        contract 'job.name -> ""'
-        expect(rendered).to include(job.name)
-      end
-
-      it 'shows the Job status' do
-        contract 'job.status -> ""'
-        expect(rendered).to include(job.status.humanize(capitalize: false))
-      end
-    end
-
-    describe 'Job links' do
-      it 'links to the Job edit page' do
-        assert_select 'a', 'Edit', href: edit_job_path(job)
-      end
-
-      it 'links to the Job display page' do
-        assert_select 'a', 'Display', href: display_job_path(job)
-      end
+      expect(rendered).to include(job.name)
     end
   end
 
-  describe 'status colors' do
-    context 'status is never run' do
-      it 'shows the status in a grey label' do
-        do_render(jobs('never_run'))
-        assert_select '.label-default'
-      end
-    end
-
-    context 'status is passed' do
-      it 'shows the status in a green label' do
+  describe 'color' do
+    context 'when the build passed' do
+      it 'is green' do
         do_render(jobs('passed'))
-        assert_select '.label-success'
+        assert_select '.card-success'
       end
     end
 
-    context 'status is failed' do
-      it 'shows the status in a red label' do
+    context 'when the build failed' do
+      it 'is red' do
         do_render(jobs('failed'))
-        assert_select '.label-danger'
+        assert_select '.card-danger'
+      end
+    end
+
+    context 'when the has never run' do
+      it 'is white' do
+        do_render(jobs('never_run'))
+        assert_select '.card-success', {count: 0}
+        assert_select '.card-danger', {count: 0}
       end
     end
   end

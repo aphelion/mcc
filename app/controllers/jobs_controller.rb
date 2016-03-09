@@ -24,7 +24,7 @@ class JobsController < ApplicationController
     redirect_to @job.update(job_params) ? jobs_path : new_job_path
   end
 
-  def display
+  def show
     @job = model.find(params[:id])
   end
 

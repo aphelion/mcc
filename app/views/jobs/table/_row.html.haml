@@ -7,4 +7,4 @@
         = job.status.humanize(capitalize: false)
   %td
     = link_to 'Edit', edit_job_path(job), class: 'btn btn-secondary'
-    = link_to 'Display', display_job_path(job), class: 'btn btn-primary'
+    = link_to 'Launch', job_path(job), class: 'btn btn-primary'

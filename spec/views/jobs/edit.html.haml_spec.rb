@@ -9,7 +9,7 @@ describe 'jobs/edit.html.haml' do
     render_contract('jobs#edit')
   end
 
-  it { contract 'jobs/_display renders job' }
+  it { contract 'jobs/_form renders job form' }
 
   it 'renders a form for the Job' do
     expect(view).to have_rendered(partial: 'form', locals: {job: job, statuses: statuses, cancel_path: jobs_path})

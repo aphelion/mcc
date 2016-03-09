@@ -34,8 +34,8 @@ describe 'jobs/table/_row.html.haml' do
         assert_select 'tr td:nth-child(3) a', 'Edit', href: edit_job_path(job)
       end
 
-      it 'renders a link to the Job display page' do
-        assert_select 'tr td:nth-child(3) a', 'Display', href: display_job_path(job)
+      it 'renders a link to the Job show page' do
+        assert_select 'tr td:nth-child(3) a', 'Launch', href: job_path(job)
       end
     end
   end

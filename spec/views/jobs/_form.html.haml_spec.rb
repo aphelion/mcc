@@ -2,7 +2,7 @@ describe 'jobs/_form.html.haml' do
   fixtures(:jobs)
   let(:statuses) { ['passed', 'failed'] }
 
-  it { fulfill 'jobs/_display renders job' }
+  it { fulfill 'jobs/_form renders job form' }
 
   describe 'basic form composition' do
     let(:job) { jobs(:job_1) }
