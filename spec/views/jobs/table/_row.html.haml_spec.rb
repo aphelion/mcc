@@ -67,6 +67,59 @@ describe 'jobs/table/_row.html.haml' do
     end
   end
 
+
+  describe 'responsive layout' do
+    let(:job) { jobs('job_1') }
+
+    before do
+      do_render(job)
+    end
+
+    it 'displays a single column on small screens' do
+      assert_select 'tr td:nth-child(1).hidden-xs-down'
+      assert_select 'tr td:nth-child(2).hidden-xs-down'
+      assert_select 'tr td:nth-child(3).hidden-xs-down'
+      assert_select 'tr td:nth-child(4).hidden-sm-up'
+    end
+
+    describe 'the small screen single column' do
+      describe 'Job text' do
+        it 'shows the Job name' do
+          contract 'job.name -> ""'
+          assert_select 'tr td:nth-child(4)' do
+            assert_select 'h3', {text: job.name}
+          end
+        end
+
+        it 'shows the Job status' do
+          contract 'job.status -> ""'
+          assert_select 'tr td:nth-child(4)' do
+            assert_select 'h3 >', {text: job.status.humanize(capitalize: false)}
+          end
+        end
+      end
+
+      describe 'Job actions' do
+        it 'renders a link to the Job edit page' do
+          assert_select 'tr td:nth-child(4)' do
+            assert_select 'a', 'Edit', href: edit_job_path(job)
+          end
+        end
+
+        it 'renders a link to the Job show page' do
+          assert_select 'tr td:nth-child(4)' do
+            assert_select 'a', 'Launch', href: job_path(job)
+          end
+        end
+
+        it 'keeps the action buttons together' do
+          assert_select 'tr td:nth-child(4) .text-nowrap a', 'Edit'
+          assert_select 'tr td:nth-child(4) .text-nowrap a', 'Launch'
+        end
+      end
+    end
+  end
+
   describe 'live updating' do
     let(:job) { jobs('job_1') }
 

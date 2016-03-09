@@ -31,4 +31,13 @@ describe 'jobs/table/_header.html.haml' do
       assert_select 'thead tr th:nth-child(3)[data-defaultsort="disabled"]', {text: 'actions'}
     end
   end
+
+  describe 'responsive layout' do
+    it 'displays a single column on small screens' do
+      assert_select 'thead tr th:nth-child(1).hidden-xs-down'
+      assert_select 'thead tr th:nth-child(2).hidden-xs-down'
+      assert_select 'thead tr th:nth-child(3).hidden-xs-down'
+      assert_select 'thead tr th:nth-child(4).hidden-sm-up', {text: 'jobs'}
+    end
+  end
 end

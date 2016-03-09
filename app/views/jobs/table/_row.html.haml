@@ -1,10 +1,17 @@
 %tr{data: {job_table_row: job.id}}
-  %td
+  %td.hidden-xs-down
     %h3= job.name
-  %td
+  %td.hidden-xs-down
     %h3
       %span.label{class: (job_status_label_class(job))}
         = job.status.humanize(capitalize: false)
-  %td.text-nowrap
+  %td.hidden-xs-down.text-nowrap
     = link_to 'Edit', edit_job_path(job), class: 'btn btn-secondary'
     = link_to 'Launch', job_path(job), class: 'btn btn-primary'
+  %td.hidden-sm-up
+    %h3= job.name
+    %h3.text-nowrap
+      %span.label{class: (job_status_label_class(job))}
+        = job.status.humanize(capitalize: false)
+      = link_to 'Edit', edit_job_path(job), class: 'btn btn-secondary'
+      = link_to 'Launch', job_path(job), class: 'btn btn-primary'
