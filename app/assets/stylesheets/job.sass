@@ -14,6 +14,13 @@
   height: $font-size-lg
   @include border-radius($font-size-lg / 2)
 
+.job
+  .job-title
+    font-weight: $headings-font-weight
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
 .card
   &.job-status-passed
     @extend .job-status-passed

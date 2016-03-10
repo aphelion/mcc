@@ -33,6 +33,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
   gem 'rails-assets-bootstrap-sortable'
   gem 'rails-assets-momentjs'
+  gem 'rails-assets-FitText.js'
 end
 
 # Use Capistrano for deployment

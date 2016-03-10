@@ -16,5 +16,6 @@
 //= require moment.js
 //= require bootstrap
 //= require bootstrap-sortable
+//= require FitText.js/jquery.fittext
 //= require turbolinks
 //= require_tree .
