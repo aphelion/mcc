@@ -29,6 +29,8 @@ gem 'redis', '~> 3.0'
 gem 'haml'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 
+gem 'rake', '~> 10.5.0'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
   gem 'rails-assets-bootstrap-sortable'
