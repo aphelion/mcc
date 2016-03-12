@@ -1,8 +1,8 @@
-class JobDestroyBroadcastJob < ApplicationJob
+class BuildDestroyBroadcastJob < ApplicationJob
   queue_as :default
 
-  def perform(job_id)
-    ActionCable.server.broadcast "job_#{job_id}",
+  def perform(build_id)
+    ActionCable.server.broadcast "build_#{build_id}",
                                  event: 'destroy'
   end
 end

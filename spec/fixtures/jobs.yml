@@ -1,20 +1,20 @@
-job_1:
+build_1:
   id: 1
-  name: 'job 1'
+  name: 'build 1'
   status: 'passed'
-job_2:
+build_2:
   id: 2
-  name: 'job 2'
+  name: 'build 2'
   status: 'failed'
 never_run:
   id: 3
-  name: 'job 1'
+  name: 'build 1'
   status: 'never_run'
 passed:
   id: 4
-  name: 'job 2'
+  name: 'build 2'
   status: 'passed'
 failed:
   id: 5
-  name: 'job 2'
+  name: 'build 2'
   status: 'failed'

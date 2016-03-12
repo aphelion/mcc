@@ -1,4 +1,4 @@
-describe JobDestroyBroadcastJob do
+describe BuildDestroyBroadcastJob do
   let(:server) { double(:server) }
 
   describe '.perform' do
@@ -7,12 +7,12 @@ describe JobDestroyBroadcastJob do
       allow(ActionCable).to receive(:server).and_return(server)
     end
 
-    it { fulfill 'Job destroys are broadcast to job_#' }
-    it { contract 'Job ids are enqueued to to a JobDestroyBroadcastJob on destroy' }
+    it { fulfill 'Build destroys are broadcast to build_#' }
+    it { contract 'Build ids are enqueued to to a BuildDestroyBroadcastJob on destroy' }
 
-    it 'broadcasts the Job destroy event' do
+    it 'broadcasts the Build destroy event' do
       expect(server).to receive(:broadcast)
-                            .with('job_1', event: 'destroy')
+                            .with('build_1', event: 'destroy')
 
       subject.perform(1)
     end

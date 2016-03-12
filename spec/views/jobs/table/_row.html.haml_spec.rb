@@ -1,41 +1,41 @@
-describe 'jobs/table/_row.html.haml' do
-  fixtures(:jobs)
+describe 'builds/table/_row.html.haml' do
+  fixtures(:builds)
 
-  def do_render(job)
-    fulfill 'jobs/table/_row renders job'
-    render partial: 'jobs/table/row', locals: {job: job}
+  def do_render(build)
+    fulfill 'builds/table/_row renders build'
+    render partial: 'builds/table/row', locals: {build: build}
   end
 
-  context 'any Job' do
-    let(:job) { jobs('job_1') }
+  context 'any Build' do
+    let(:build) { builds('build_1') }
 
     before do
-      do_render(job)
+      do_render(build)
     end
 
-    describe 'Job text' do
+    describe 'Build text' do
       it 'renders a table row' do
         assert_select 'tr'
       end
 
-      it 'shows the Job name' do
-        contract 'job.name -> ""'
-        assert_select 'tr td:nth-child(1)', {text: job.name}
+      it 'shows the Build name' do
+        contract 'build.name -> ""'
+        assert_select 'tr td:nth-child(1)', {text: build.name}
       end
 
-      it 'shows the Job status' do
-        contract 'job.status -> ""'
-        assert_select 'tr td:nth-child(2)', {text: job.status.humanize(capitalize: false)}
+      it 'shows the Build status' do
+        contract 'build.status -> ""'
+        assert_select 'tr td:nth-child(2)', {text: build.status.humanize(capitalize: false)}
       end
     end
 
-    describe 'Job actions' do
-      it 'renders a link to the Job edit page' do
-        assert_select 'tr td:nth-child(3) a', 'Edit', href: edit_job_path(job)
+    describe 'Build actions' do
+      it 'renders a link to the Build edit page' do
+        assert_select 'tr td:nth-child(3) a', 'Edit', href: edit_build_path(build)
       end
 
-      it 'renders a link to the Job show page' do
-        assert_select 'tr td:nth-child(3) a', 'Launch', href: job_path(job)
+      it 'renders a link to the Build show page' do
+        assert_select 'tr td:nth-child(3) a', 'Launch', href: build_path(build)
       end
 
       it 'keeps the action buttons together' do
@@ -47,21 +47,21 @@ describe 'jobs/table/_row.html.haml' do
   describe 'status colors' do
     context 'status is never run' do
       it 'renders the status in a grey label' do
-        do_render(jobs('never_run'))
+        do_render(builds('never_run'))
         assert_select 'tr td .label-default'
       end
     end
 
     context 'status is passed' do
       it 'renders the status in a green label' do
-        do_render(jobs('passed'))
+        do_render(builds('passed'))
         assert_select 'tr td .label-success'
       end
     end
 
     context 'status is failed' do
       it 'renders the status in a red label' do
-        do_render(jobs('failed'))
+        do_render(builds('failed'))
         assert_select 'tr td .label-danger'
       end
     end
@@ -69,10 +69,10 @@ describe 'jobs/table/_row.html.haml' do
 
 
   describe 'responsive layout' do
-    let(:job) { jobs('job_1') }
+    let(:build) { builds('build_1') }
 
     before do
-      do_render(job)
+      do_render(build)
     end
 
     it 'displays a single column on small screens' do
@@ -83,32 +83,32 @@ describe 'jobs/table/_row.html.haml' do
     end
 
     describe 'the small screen single column' do
-      describe 'Job text' do
-        it 'shows the Job name' do
-          contract 'job.name -> ""'
+      describe 'Build text' do
+        it 'shows the Build name' do
+          contract 'build.name -> ""'
           assert_select 'tr td:nth-child(4)' do
-            assert_select 'h3', {text: job.name}
+            assert_select 'h3', {text: build.name}
           end
         end
 
-        it 'shows the Job status as colored circles' do
-          contract 'job.status -> ""'
+        it 'shows the Build status as colored circles' do
+          contract 'build.status -> ""'
           assert_select 'tr td:nth-child(4)' do
-            assert_select ".job-status-circle.job-status-#{job.status.dasherize}"
+            assert_select ".build-status-circle.build-status-#{build.status.dasherize}"
           end
         end
       end
 
-      describe 'Job actions' do
-        it 'renders a link to the Job edit page' do
+      describe 'Build actions' do
+        it 'renders a link to the Build edit page' do
           assert_select 'tr td:nth-child(4)' do
-            assert_select 'a', 'Edit', href: edit_job_path(job)
+            assert_select 'a', 'Edit', href: edit_build_path(build)
           end
         end
 
-        it 'renders a link to the Job show page' do
+        it 'renders a link to the Build show page' do
           assert_select 'tr td:nth-child(4)' do
-            assert_select 'a', 'Launch', href: job_path(job)
+            assert_select 'a', 'Launch', href: build_path(build)
           end
         end
 
@@ -121,12 +121,12 @@ describe 'jobs/table/_row.html.haml' do
   end
 
   describe 'live updating' do
-    let(:job) { jobs('job_1') }
+    let(:build) { builds('build_1') }
 
-    it 'refreshes when the Job has updates' do
-      contract 'data-job-table-row is kept up-to-date'
-      do_render(job)
-      assert_select 'tr[data-job-table-row=?]', job.id.to_s
+    it 'refreshes when the Build has updates' do
+      contract 'data-build-table-row is kept up-to-date'
+      do_render(build)
+      assert_select 'tr[data-build-table-row=?]', build.id.to_s
     end
   end
 end

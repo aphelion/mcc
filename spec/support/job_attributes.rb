@@ -1,10 +1,10 @@
-module JobAttributes
+module BuildAttributes
   def self.valid_attributes
-    {name: 'a job', status: 'passed'}
+    {name: 'a build', status: 'passed'}
   end
 
   def self.updated_valid_attributes
-    self.valid_attributes.merge({name: 'updated job'})
+    self.valid_attributes.merge({name: 'updated build'})
   end
 
   def self.invalid_attributes
@@ -12,7 +12,7 @@ module JobAttributes
   end
 
   def self.updated_invalid_attributes
-    self.invalid_attributes.merge({name: 'updated job'})
+    self.invalid_attributes.merge({name: 'updated build'})
   end
 
   def self.extra_attributes

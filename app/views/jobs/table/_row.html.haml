@@ -1,17 +1,17 @@
-%tr{data: {job_table_row: job.id}}
+%tr{data: {build_table_row: build.id}}
   %td.hidden-xs-down
-    %h3= job.name
+    %h3= build.name
   %td.hidden-xs-down
     %h3
-      %span.label{class: (job_status_label_class(job))}
-        = job.status.humanize(capitalize: false)
+      %span.label{class: (build_status_label_class(build))}
+        = build.status.humanize(capitalize: false)
   %td.hidden-xs-down.text-nowrap
-    = link_to 'Edit', edit_job_path(job), class: 'btn btn-secondary'
-    = link_to 'Launch', job_path(job), class: 'btn btn-primary'
+    = link_to 'Edit', edit_build_path(build), class: 'btn btn-secondary'
+    = link_to 'Launch', build_path(build), class: 'btn btn-primary'
   %td.hidden-sm-up
     %h3
-      %span.job-status-circle{class: job_status_class(job)}
-      = job.name
+      %span.build-status-circle{class: build_status_class(build)}
+      = build.name
     %h3.text-nowrap
-      = link_to 'Edit', edit_job_path(job), class: 'btn btn-secondary'
-      = link_to 'Launch', job_path(job), class: 'btn btn-primary'
+      = link_to 'Edit', edit_build_path(build), class: 'btn btn-secondary'
+      = link_to 'Launch', build_path(build), class: 'btn btn-primary'

@@ -1,14 +1,14 @@
-describe 'jobs/show.html.haml' do
-  fixtures(:jobs)
-  let(:job) { jobs('job_1') }
+describe 'builds/show.html.haml' do
+  fixtures(:builds)
+  let(:build) { builds('build_1') }
 
   before do
-    assign_contract('jobs#show', :job, job)
-    render_contract('jobs#show')
+    assign_contract('builds#show', :build, build)
+    render_contract('builds#show')
   end
 
-  it 'renders the Job' do
-    contract 'jobs/_job renders job'
-    expect(view).to have_rendered(partial: 'jobs/_job', locals: {job: job})
+  it 'renders the Build' do
+    contract 'builds/_build renders build'
+    expect(view).to have_rendered(partial: 'builds/_build', locals: {build: build})
   end
 end

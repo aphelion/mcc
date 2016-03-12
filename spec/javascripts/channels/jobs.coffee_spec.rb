@@ -1,7 +1,7 @@
-describe 'channels/jobs.coffee' do
-  it 'syncs Jobs with events from JobChannel' do
-    fulfill 'data-job-table is kept up-to-date'
-    contract 'Job creations are streamed to JobsChannel'
+describe 'channels/builds.coffee' do
+  it 'syncs Builds with events from BuildChannel' do
+    fulfill 'data-build-table is kept up-to-date'
+    contract 'Build creations are streamed to BuildsChannel'
 
     #             ______________
     #       ,===:'.,            `-._

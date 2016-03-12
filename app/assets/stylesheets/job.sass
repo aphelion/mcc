@@ -1,33 +1,33 @@
 @import "bootstrap/mixins"
 @import "bootstrap/variables"
 
-.job-status-passed
+.build-status-passed
   background-color: $brand-success
-.job-status-failed
+.build-status-failed
   background-color: $brand-danger
-.job-status-never-run
+.build-status-never-run
   background-color: $gray-light
 
-.job-status-circle
+.build-status-circle
   display: inline-block
   width: $font-size-lg
   height: $font-size-lg
   @include border-radius($font-size-lg / 2)
 
-.job
-  .job-title
+.build
+  .build-title
     font-weight: $headings-font-weight
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
 
 .card
-  &.job-status-passed
-    @extend .job-status-passed
+  &.build-status-passed
+    @extend .build-status-passed
     border-color: $brand-success
-  &.job-status-failed
-    @extend .job-status-failed
+  &.build-status-failed
+    @extend .build-status-failed
     border-color: $brand-danger
-  &.job-status-never-run
-    @extend .job-status-never-run
+  &.build-status-never-run
+    @extend .build-status-never-run
     border-color: $gray-light

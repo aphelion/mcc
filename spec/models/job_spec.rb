@@ -1,88 +1,88 @@
 require 'support/fixture_helpers'
-require 'support/job_attributes'
+require 'support/build_attributes'
 
-describe Job do
-  fixtures(:jobs)
-  let(:valid_attributes) { JobAttributes.valid_attributes }
-  let(:statuses) { JobAttributes.statuses }
+describe Build do
+  fixtures(:builds)
+  let(:valid_attributes) { BuildAttributes.valid_attributes }
+  let(:statuses) { BuildAttributes.statuses }
 
   it 'saves to the database' do
-    savedJob = Job.create(valid_attributes)
-    foundJob = Job.find(savedJob.id)
+    savedBuild = Build.create(valid_attributes)
+    foundBuild = Build.find(savedBuild.id)
 
-    expect(foundJob).to have_attributes(valid_attributes)
+    expect(foundBuild).to have_attributes(valid_attributes)
   end
 
   context 'instance attributes' do
-    let(:job) { jobs(:job_1) }
+    let(:build) { builds(:build_1) }
 
     it 'has a name' do
-      agree(job, :name).will eq('job 1')
+      agree(build, :name).will eq('build 1')
     end
 
     it 'has a status' do
-      agree(job, :status).will eq('passed')
+      agree(build, :status).will eq('passed')
     end
   end
 
   context 'instance methods' do
-    let(:job) { jobs(:job_1) }
+    let(:build) { builds(:build_1) }
 
     describe '.save' do
       it 'returns true on success' do
-        fulfill 'job.save -> ?'
-        expect(job.save).to eq(true)
+        fulfill 'build.save -> ?'
+        expect(build.save).to eq(true)
       end
     end
 
     describe '.update' do
       it 'returns true on success' do
-        fulfill 'job.update -> ?'
-        expect(job.update(valid_attributes)).to eq(true)
+        fulfill 'build.update -> ?'
+        expect(build.update(valid_attributes)).to eq(true)
       end
     end
 
     describe '.destroy' do
       it 'returns true on success' do
-        fulfill 'job.destroy works'
-        job.destroy
-        expect(job.destroyed?).to eq(true)
+        fulfill 'build.destroy works'
+        build.destroy
+        expect(build.destroyed?).to eq(true)
       end
     end
   end
 
   context 'class methods' do
     describe '.all' do
-      let(:jobs) { all_fixtures(:jobs) }
+      let(:builds) { all_fixtures(:builds) }
 
-      it 'returns all Jobs' do
-        agree(Job, :all).will eq(jobs)
+      it 'returns all Builds' do
+        agree(Build, :all).will eq(builds)
       end
     end
 
     describe '.new' do
       context 'with no parameters' do
-        it 'returns a new Job' do
-          agree(Job, :new).will be_a(Job)
+        it 'returns a new Build' do
+          agree(Build, :new).will be_a(Build)
         end
       end
 
       context 'with a hash' do
-        it 'returns a new Job' do
-          agree(Job, :new, valid_attributes).will be_a(Job)
+        it 'returns a new Build' do
+          agree(Build, :new, valid_attributes).will be_a(Build)
         end
       end
     end
 
     describe '.find' do
-      it 'finds a Job by id' do
-        agree(Job, :find, '1').will be_a(Job)
+      it 'finds a Build by id' do
+        agree(Build, :find, '1').will be_a(Build)
       end
     end
 
     describe '.statuses' do
-      it 'provides the list of Job statuses' do
-        agree(Job, :statuses).will eq(statuses)
+      it 'provides the list of Build statuses' do
+        agree(Build, :statuses).will eq(statuses)
       end
     end
   end
@@ -97,39 +97,39 @@ describe Job do
     end
 
     describe '.create' do
-      it { fulfill 'Jobs are enqueued to to a JobCreateBroadcastJob on create' }
+      it { fulfill 'Builds are enqueued to to a BuildCreateBroadcastJob on create' }
 
-      it 'creates a Job to broadcaste the create' do
-        @createdJob
+      it 'creates a Build to broadcaste the create' do
+        @createdBuild
         expect {
-          @createdJob = Job.create(valid_attributes)
-        }.to have_enqueued_job(JobCreateBroadcastJob)
-                 .with(@createdJob)
+          @createdBuild = Build.create(valid_attributes)
+        }.to have_enqueued_job(BuildCreateBroadcastJob)
+                 .with(@createdBuild)
       end
     end
 
     describe '.update' do
-      it { fulfill 'Jobs are enqueued to to a JobUpdateBroadcastJob on update' }
+      it { fulfill 'Builds are enqueued to to a BuildUpdateBroadcastJob on update' }
 
-      it 'creates a Job to broadcast the update' do
-        @updatedJob
+      it 'creates a Build to broadcast the update' do
+        @updatedBuild
         expect {
-          @updatedJob = jobs(:job_1).update(valid_attributes)
-        }.to have_enqueued_job(JobUpdateBroadcastJob)
-                 .with(@updatedJob)
+          @updatedBuild = builds(:build_1).update(valid_attributes)
+        }.to have_enqueued_job(BuildUpdateBroadcastJob)
+                 .with(@updatedBuild)
       end
     end
 
     describe '.destroy' do
-      it { fulfill 'Job ids are enqueued to to a JobDestroyBroadcastJob on destroy' }
+      it { fulfill 'Build ids are enqueued to to a BuildDestroyBroadcastJob on destroy' }
 
-      let(:job) { jobs(:job_1) }
+      let(:build) { builds(:build_1) }
 
-      it 'creates a Job to broadcast the destroy' do
+      it 'creates a Build to broadcast the destroy' do
         expect {
-          job.destroy
-        }.to have_enqueued_job(JobDestroyBroadcastJob)
-                 .with(job.id)
+          build.destroy
+        }.to have_enqueued_job(BuildDestroyBroadcastJob)
+                 .with(build.id)
       end
     end
   end

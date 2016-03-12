@@ -1,25 +1,25 @@
-describe 'jobs/_form.html.haml' do
-  fixtures(:jobs)
+describe 'builds/_form.html.haml' do
+  fixtures(:builds)
   let(:statuses) { ['passed', 'failed'] }
 
-  it { fulfill 'jobs/_form renders job form' }
+  it { fulfill 'builds/_form renders build form' }
 
   describe 'basic form composition' do
-    let(:job) { jobs(:job_1) }
+    let(:build) { builds(:build_1) }
     before do
-      render partial: 'jobs/form', locals: {job: job, statuses: statuses}
+      render partial: 'builds/form', locals: {build: build, statuses: statuses}
     end
 
     it 'renders a pre-populated input for name' do
-      assert_select 'input#job_name[value=?]', job.name
+      assert_select 'input#build_name[value=?]', build.name
     end
 
     it 'renders a pre-selected select for status' do
-      assert_select 'select#job_status'
+      assert_select 'select#build_status'
       statuses.each do |status|
-        assert_select 'select#job_status option[value=?]', status, {text: status.humanize(capitalize: false)}
+        assert_select 'select#build_status option[value=?]', status, {text: status.humanize(capitalize: false)}
       end
-      assert_select 'select#job_status option[selected][value=?]', 'passed'
+      assert_select 'select#build_status option[selected][value=?]', 'passed'
     end
 
     it 'renders a submit button' do
@@ -28,31 +28,31 @@ describe 'jobs/_form.html.haml' do
   end
 
   describe 'cancel button' do
-    let(:job) { jobs(:job_1) }
+    let(:build) { builds(:build_1) }
     context 'when cancel_path is supplied' do
       it 'renders a cancel button' do
-        render partial: 'jobs/form', locals: {job: job, statuses: statuses, cancel_path: job_path(job)}
-        assert_select 'a', 'Cancel', href: job_path(job)
+        render partial: 'builds/form', locals: {build: build, statuses: statuses, cancel_path: build_path(build)}
+        assert_select 'a', 'Cancel', href: build_path(build)
       end
     end
 
     context 'when cancel_path is not supplied' do
       it 'does not render a cancel button' do
-        render partial: 'jobs/form', locals: {job: job, statuses: statuses}
+        render partial: 'builds/form', locals: {build: build, statuses: statuses}
         assert_select 'a', {text: 'Cancel', count: 0}
       end
     end
   end
 
-  context 'when Job is new' do
-    let(:job) { Job.new }
+  context 'when Build is new' do
+    let(:build) { Build.new }
 
     before do
-      render partial: 'jobs/form', locals: {job: job, statuses: statuses}
+      render partial: 'builds/form', locals: {build: build, statuses: statuses}
     end
 
-    it 'submits POST to jobs' do
-      assert_select 'form[action=?][method=?]', jobs_path, 'post'
+    it 'submits POST to builds' do
+      assert_select 'form[action=?][method=?]', builds_path, 'post'
     end
 
     it 'does not render a delete button' do
@@ -60,20 +60,20 @@ describe 'jobs/_form.html.haml' do
     end
   end
 
-  context 'when Job already exists' do
-    let(:job) { jobs(:job_1) }
+  context 'when Build already exists' do
+    let(:build) { builds(:build_1) }
 
     before do
-      render partial: 'jobs/form', locals: {job: job, statuses: statuses}
+      render partial: 'builds/form', locals: {build: build, statuses: statuses}
     end
 
-    it 'submits POST to job' do
-      assert_select 'form[action=?][method=?]', job_path(job), 'post'
+    it 'submits POST to build' do
+      assert_select 'form[action=?][method=?]', build_path(build), 'post'
     end
 
     it 'renders a delete button' do
-      contract 'DELETE /jobs/#'
-      assert_select 'a', 'Delete', {method: :delete, href: job_path(job)}
+      contract 'DELETE /builds/#'
+      assert_select 'a', 'Delete', {method: :delete, href: build_path(build)}
     end
   end
 end

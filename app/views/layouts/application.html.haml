@@ -13,6 +13,6 @@
       %nav.navbar.navbar-light.bg-faded
         = link_to 'MCC', '/', {class: 'navbar-brand'}
         %ul.nav.navbar-nav
-          %li.nav-item{class: ('active' if current_page?(jobs_path))}
-            = link_to 'Jobs', jobs_path, class: 'nav-link'
+          %li.nav-item{class: ('active' if current_page?(builds_path))}
+            = link_to 'Builds', builds_path, class: 'nav-link'
       = yield

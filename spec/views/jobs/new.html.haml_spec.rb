@@ -1,16 +1,16 @@
-describe 'jobs/new.html.haml' do
-  let(:job) { Job.new }
+describe 'builds/new.html.haml' do
+  let(:build) { Build.new }
   let(:statuses) { ['passed', 'failed'] }
 
   before do
-    assign_contract('jobs#new', :job, job)
-    assign_contract('jobs#new', :statuses, statuses)
-    render_contract('jobs#new')
+    assign_contract('builds#new', :build, build)
+    assign_contract('builds#new', :statuses, statuses)
+    render_contract('builds#new')
   end
 
-  it { contract 'jobs/_form renders job form' }
+  it { contract 'builds/_form renders build form' }
 
-  it 'renders a form for the Job' do
-    expect(view).to have_rendered(partial: 'form', locals: {job: job, statuses: statuses, cancel_path: jobs_path})
+  it 'renders a form for the Build' do
+    expect(view).to have_rendered(partial: 'form', locals: {build: build, statuses: statuses, cancel_path: builds_path})
   end
 end

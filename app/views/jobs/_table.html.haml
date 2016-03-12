@@ -1,5 +1,5 @@
-%table.table.sortable{data: {job_table: true}}
-  = render 'jobs/table/header'
+%table.table.sortable{data: {build_table: true}}
+  = render 'builds/table/header'
   %tbody
-    - jobs.each do |job|
-      = render 'jobs/table/row', job: job
+    - builds.each do |build|
+      = render 'builds/table/row', build: build

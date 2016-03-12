@@ -1,6 +1,6 @@
-class JobChannel < ApplicationCable::Channel
+class BuildChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "job_#{params[:job]}"
+    stream_from "build_#{params[:build]}"
   end
 
   def unsubscribed

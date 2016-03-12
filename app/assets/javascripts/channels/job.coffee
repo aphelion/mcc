@@ -1,27 +1,27 @@
 @App ||= {}
 
-class App.Job
+class App.Build
   constructor: (element) ->
-    @jobElement = $(element)
-    Job.fitText(@jobElement)
+    @buildElement = $(element)
+    Build.fitText(@buildElement)
 
-  @fitText: (jobElement) =>
-    jobElement.find('.job-title').fitText(0.4, {maxFontSize: '192pt'})
+  @fitText: (buildElement) =>
+    buildElement.find('.build-title').fitText(0.4, {maxFontSize: '192pt'})
 
   replace: (element) =>
-    jobUpdate = $(element)
-    @jobElement.replaceWith(jobUpdate)
-    @jobElement = jobUpdate
-    Job.fitText(@jobElement)
-    @jobElement.hide().fadeIn()
+    buildUpdate = $(element)
+    @buildElement.replaceWith(buildUpdate)
+    @buildElement = buildUpdate
+    Build.fitText(@buildElement)
+    @buildElement.hide().fadeIn()
 
-  destroy: (subscription, jobElement) =>
+  destroy: (subscription, buildElement) =>
     App.cable.subscriptions.remove(subscription)
-    jobElement.fadeOut ->
-      jobElement.remove()
+    buildElement.fadeOut ->
+      buildElement.remove()
 
   subscribe: =>
-    @subscription = App.cable.subscriptions.create {channel: 'JobChannel', job: @jobElement.data('job')},
+    @subscription = App.cable.subscriptions.create {channel: 'BuildChannel', build: @buildElement.data('build')},
       connected: =>
 
       disconnected: =>
@@ -29,28 +29,28 @@ class App.Job
       received: (data) =>
         switch data['event']
           when 'update'
-            @replace(data['html']['job'])
+            @replace(data['html']['build'])
           when 'destroy'
-            @destroy(@subscription, @jobElement)
+            @destroy(@subscription, @buildElement)
 
     $(document).one 'turbolinks:visit', =>
       App.cable.subscriptions.remove(@subscription)
 
 
-# data-job
+# data-build
 $(document).on 'turbolinks:load', ->
-  $('[data-job]').each (index, element) ->
-    job = new App.Job(element)
-    job.subscribe()
+  $('[data-build]').each (index, element) ->
+    build = new App.Build(element)
+    build.subscribe()
 
-#class App.JobTable
+#class App.BuildTable
 
-# data-job-table
+# data-build-table
 $(document).on 'turbolinks:load', ->
-  $('[data-job-table]').each (index, element) ->
-    jobTableBody = $(element).find('tbody')
+  $('[data-build-table]').each (index, element) ->
+    buildTableBody = $(element).find('tbody')
 
-    subscription = App.cable.subscriptions.create {channel: 'JobsChannel'},
+    subscription = App.cable.subscriptions.create {channel: 'BuildsChannel'},
       connected: ->
 
       disconnected: ->
@@ -58,23 +58,23 @@ $(document).on 'turbolinks:load', ->
       received: (data) ->
         switch data['event']
           when 'create'
-            jobTableRow = $(data['html']['job_table_row'])
-            registerJobTableRow(jobTableRow)
-            jobTableRow.children('td, th').wrapInner('<div/>').children().hide()
-            jobTableBody.append(jobTableRow)
+            buildTableRow = $(data['html']['build_table_row'])
+            registerBuildTableRow(buildTableRow)
+            buildTableRow.children('td, th').wrapInner('<div/>').children().hide()
+            buildTableBody.append(buildTableRow)
             $.bootstrapSortable(true)
-            jobTableRow.children('td, th').children().slideDown()
+            buildTableRow.children('td, th').children().slideDown()
 
-# data-job-table-row
+# data-build-table-row
 $(document).on 'turbolinks:load', ->
-  $('[data-job-table-row]').each (index, element) ->
-    jobTableRow = $(element)
-    registerJobTableRow(jobTableRow)
+  $('[data-build-table-row]').each (index, element) ->
+    buildTableRow = $(element)
+    registerBuildTableRow(buildTableRow)
 
-registerJobTableRow = (jobTableRow) ->
-  jobId = jobTableRow.data('job-table-row')
+registerBuildTableRow = (buildTableRow) ->
+  buildId = buildTableRow.data('build-table-row')
 
-  subscription = App.cable.subscriptions.create {channel: 'JobChannel', job: jobId},
+  subscription = App.cable.subscriptions.create {channel: 'BuildChannel', build: buildId},
     connected: ->
 
     disconnected: ->
@@ -82,17 +82,17 @@ registerJobTableRow = (jobTableRow) ->
     received: (data) ->
       switch data['event']
         when 'update'
-          jobTableRowUpdate = $(data['html']['job_table_row'])
+          buildTableRowUpdate = $(data['html']['build_table_row'])
 
-          jobTableRow.fadeOut ->
-            jobTableRow.replaceWith ->
-              jobTableRow = jobTableRowUpdate
-              jobTableRowUpdate.hide().fadeIn()
+          buildTableRow.fadeOut ->
+            buildTableRow.replaceWith ->
+              buildTableRow = buildTableRowUpdate
+              buildTableRowUpdate.hide().fadeIn()
         when 'destroy'
           App.cable.subscriptions.remove(subscription)
-          jobTableRow.fadeTo 400, 0, ->
-            jobTableRow.children('td, th').animate(padding: 0).wrapInner('<div/>').children().slideUp ->
-              jobTableRow.remove()
+          buildTableRow.fadeTo 400, 0, ->
+            buildTableRow.children('td, th').animate(padding: 0).wrapInner('<div/>').children().slideUp ->
+              buildTableRow.remove()
 
   $(document).one 'turbolinks:visit', ->
     App.cable.subscriptions.remove(subscription)

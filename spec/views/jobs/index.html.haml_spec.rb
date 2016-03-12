@@ -1,17 +1,17 @@
-describe 'jobs/index.html.haml' do
-  let(:jobs) { all_fixtures(:jobs) }
+describe 'builds/index.html.haml' do
+  let(:builds) { all_fixtures(:builds) }
 
   before do
-    assign_contract('jobs#index', :jobs, jobs)
-    render_contract('jobs#index')
+    assign_contract('builds#index', :builds, builds)
+    render_contract('builds#index')
   end
 
-  it 'renders all Jobs in a table' do
-    contract 'jobs/_table renders jobs'
-    expect(view).to have_rendered(partial: 'jobs/_table', locals: {jobs: jobs})
+  it 'renders all Builds in a table' do
+    contract 'builds/_table renders builds'
+    expect(view).to have_rendered(partial: 'builds/_table', locals: {builds: builds})
   end
 
-  it 'links to the new Job page' do
-    assert_select 'a', 'New Job', href: new_job_path
+  it 'links to the new Build page' do
+    assert_select 'a', 'New Build', href: new_build_path
   end
 end

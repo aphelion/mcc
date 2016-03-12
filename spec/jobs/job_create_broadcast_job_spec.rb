@@ -1,7 +1,7 @@
-describe JobCreateBroadcastJob do
-  let(:job) { double(:job) }
-  let(:job_html) { double(:job_html) }
-  let(:job_table_row_html) { double(:job_table_row_html) }
+describe BuildCreateBroadcastJob do
+  let(:build) { double(:build) }
+  let(:build_html) { double(:build_html) }
+  let(:build_table_row_html) { double(:build_table_row_html) }
   let(:renderer) { double(:renderer) }
   let(:server) { double(:server) }
 
@@ -12,24 +12,24 @@ describe JobCreateBroadcastJob do
       allow(ActionCable).to receive(:server).and_return(server)
     end
 
-    it { fulfill 'Job creations are broadcast to jobs' }
-    it { contract 'Jobs are enqueued to to a JobCreateBroadcastJob on create' }
+    it { fulfill 'Build creations are broadcast to builds' }
+    it { contract 'Builds are enqueued to to a BuildCreateBroadcastJob on create' }
 
-    it { contract 'jobs/_job renders job' }
-    it { contract 'jobs/table/_row renders job' }
+    it { contract 'builds/_build renders build' }
+    it { contract 'builds/table/_row renders build' }
 
-    it 'broadcasts the Job update event with html' do
-      allow(job).to receive(:id).and_return(1)
+    it 'broadcasts the Build update event with html' do
+      allow(build).to receive(:id).and_return(1)
       expect(renderer).to receive(:render)
-                              .with(partial: 'jobs/job', locals: {job: job})
-                              .and_return(job_html)
+                              .with(partial: 'builds/build', locals: {build: build})
+                              .and_return(build_html)
       expect(renderer).to receive(:render)
-                              .with(partial: 'jobs/table/row', locals: {job: job})
-                              .and_return(job_table_row_html)
+                              .with(partial: 'builds/table/row', locals: {build: build})
+                              .and_return(build_table_row_html)
       expect(server).to receive(:broadcast)
-                            .with('jobs', event: 'create', html: {job: job_html, job_table_row: job_table_row_html})
+                            .with('builds', event: 'create', html: {build: build_html, build_table_row: build_table_row_html})
 
-      subject.perform(job)
+      subject.perform(build)
     end
   end
 end

@@ -1,7 +1,7 @@
-describe 'JobsChannel' do
-  it 'broadcasts Jobs events to subscribers' do
-    fulfill 'Job creations are streamed to JobsChannel'
-    contract 'Job creations are broadcast to jobs'
+describe 'BuildsChannel' do
+  it 'broadcasts Builds events to subscribers' do
+    fulfill 'Build creations are streamed to BuildsChannel'
+    contract 'Build creations are broadcast to builds'
 
     #             ______________
     #       ,===:'.,            `-._

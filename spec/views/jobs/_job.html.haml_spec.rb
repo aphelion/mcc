@@ -1,50 +1,50 @@
-describe 'jobs/_job.html.haml' do
-  fixtures(:jobs)
+describe 'builds/_build.html.haml' do
+  fixtures(:builds)
 
-  def do_render(job)
-    fulfill 'jobs/_job renders job'
-    render partial: 'jobs/job', locals: {job: job}
+  def do_render(build)
+    fulfill 'builds/_build renders build'
+    render partial: 'builds/build', locals: {build: build}
   end
 
-  describe 'Job text' do
-    let(:job) { jobs('job_1') }
+  describe 'Build text' do
+    let(:build) { builds('build_1') }
 
-    it 'renders the Job name' do
-      do_render(job)
-      expect(rendered).to include(job.name)
+    it 'renders the Build name' do
+      do_render(build)
+      expect(rendered).to include(build.name)
     end
   end
 
   describe 'color' do
     context 'when the build passed' do
       it 'is green' do
-        do_render(jobs('passed'))
-        assert_select '.job-status-passed'
+        do_render(builds('passed'))
+        assert_select '.build-status-passed'
       end
     end
 
     context 'when the build failed' do
       it 'is red' do
-        do_render(jobs('failed'))
-        assert_select '.job-status-failed'
+        do_render(builds('failed'))
+        assert_select '.build-status-failed'
       end
     end
 
     context 'when the has never run' do
       it 'is white' do
-        do_render(jobs('never_run'))
-        assert_select '.job-status-never-run'
+        do_render(builds('never_run'))
+        assert_select '.build-status-never-run'
       end
     end
   end
 
   describe 'live updating' do
-    let(:job) { jobs('job_1') }
+    let(:build) { builds('build_1') }
 
-    it 'refreshes when the Job has updates' do
-      contract 'data-job is kept up-to-date'
-      do_render(job)
-      assert_select '[data-job=?]', job.id.to_s
+    it 'refreshes when the Build has updates' do
+      contract 'data-build is kept up-to-date'
+      do_render(build)
+      assert_select '[data-build=?]', build.id.to_s
     end
   end
 end

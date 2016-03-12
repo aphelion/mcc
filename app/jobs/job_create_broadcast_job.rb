@@ -1,19 +1,19 @@
-class JobCreateBroadcastJob < ApplicationJob
+class BuildCreateBroadcastJob < ApplicationJob
   queue_as :default
 
-  def perform(job)
-    ActionCable.server.broadcast 'jobs',
+  def perform(build)
+    ActionCable.server.broadcast 'builds',
                                  event: 'create',
-                                 html: {job: render_job(job), job_table_row: render_job_table_row(job)}
+                                 html: {build: render_build(build), build_table_row: render_build_table_row(build)}
   end
 
   private
-  def render_job(job)
-    ApplicationController.renderer.render(partial: 'jobs/job', locals: {job: job})
+  def render_build(build)
+    ApplicationController.renderer.render(partial: 'builds/build', locals: {build: build})
   end
 
   private
-  def render_job_table_row(job)
-    ApplicationController.renderer.render(partial: 'jobs/table/row', locals: {job: job})
+  def render_build_table_row(build)
+    ApplicationController.renderer.render(partial: 'builds/table/row', locals: {build: build})
   end
 end

@@ -1,45 +1,45 @@
-class JobsController < ApplicationController
+class BuildsController < ApplicationController
 
   def index
-    @jobs = model.all
+    @builds = model.all
   end
 
   def new
-    @job = model.new
+    @build = model.new
     @statuses = model.statuses.keys
   end
 
   def create
-    @job = model.new(job_params)
-    redirect_to @job.save ? jobs_path : new_job_path
+    @build = model.new(build_params)
+    redirect_to @build.save ? builds_path : new_build_path
   end
 
   def edit
-    @job = model.find(params[:id])
+    @build = model.find(params[:id])
     @statuses = model.statuses.keys
   end
 
   def update
-    @job = model.find(params[:id])
-    redirect_to @job.update(job_params) ? jobs_path : new_job_path
+    build = model.find(params[:id])
+    redirect_to build.update(build_params) ? builds_path : new_build_path
   end
 
   def show
-    @job = model.find(params[:id])
+    @build = model.find(params[:id])
   end
 
   def destroy
-    @job = model.find(params[:id])
-    @job.destroy
-    redirect_to jobs_path
+    build = model.find(params[:id])
+    build.destroy
+    redirect_to builds_path
   end
 
   def model
-    Job
+    Build
   end
 
   private
-    def job_params
-      params.require(:job).permit(:name, :status)
+    def build_params
+      params.require(:build).permit(:name, :status)
     end
 end

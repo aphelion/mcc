@@ -1,9 +1,9 @@
-describe 'channels/job.coffee' do
-  it 'syncs Jobs with events from JobChannel' do
-    fulfill 'data-job is kept up-to-date'
-    fulfill 'data-job-table-row is kept up-to-date'
-    contract 'Job updates are streamed to JobChannel(job: id)'
-    contract 'Job destroys are streamed to JobChannel(job: id)'
+describe 'channels/build.coffee' do
+  it 'syncs Builds with events from BuildChannel' do
+    fulfill 'data-build is kept up-to-date'
+    fulfill 'data-build-table-row is kept up-to-date'
+    contract 'Build updates are streamed to BuildChannel(build: id)'
+    contract 'Build destroys are streamed to BuildChannel(build: id)'
 
     #             ______________
     #       ,===:'.,            `-._

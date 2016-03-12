@@ -1,25 +1,25 @@
 require 'support/fixture_helpers'
 
-describe 'jobs/_table.html.haml' do
-  fixtures(:jobs)
-  let(:jobs) { all_fixtures(:jobs) }
+describe 'builds/_table.html.haml' do
+  fixtures(:builds)
+  let(:builds) { all_fixtures(:builds) }
 
   before do
-    contract 'jobs/table/_header renders'
-    contract 'jobs/table/_row renders job'
-    fulfill 'jobs/_table renders jobs'
-    render partial: 'jobs/table', locals: {jobs: jobs}
+    contract 'builds/table/_header renders'
+    contract 'builds/table/_row renders build'
+    fulfill 'builds/_table renders builds'
+    render partial: 'builds/table', locals: {builds: builds}
   end
 
   describe 'structure' do
     it 'renders the header in a table' do
       assert_select 'table thead'
-      expect(view).to have_rendered(partial: 'jobs/table/_header')
+      expect(view).to have_rendered(partial: 'builds/table/_header')
     end
 
     it 'renders the rows in a body in a table' do
-      assert_select 'table tbody tr', {count: jobs.count}
-      expect(view).to have_rendered(partial: 'jobs/table/_row', count: jobs.count)
+      assert_select 'table tbody tr', {count: builds.count}
+      expect(view).to have_rendered(partial: 'builds/table/_row', count: builds.count)
     end
   end
 
@@ -30,9 +30,9 @@ describe 'jobs/_table.html.haml' do
   end
 
   describe 'live updating' do
-    it 'receives new Jobs' do
-      contract 'data-job-table is kept up-to-date'
-      assert_select 'table[data-job-table]'
+    it 'receives new Builds' do
+      contract 'data-build-table is kept up-to-date'
+      assert_select 'table[data-build-table]'
     end
   end
 end
