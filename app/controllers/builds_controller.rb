@@ -1,4 +1,5 @@
 class BuildsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:hook]
 
   def index
     @builds = model.all
@@ -32,6 +33,13 @@ class BuildsController < ApplicationController
     build = model.find(params[:id])
     build.destroy
     redirect_to builds_path
+  end
+
+  def hook
+    build = model.find(params[:id])
+    logger.info("Build '#{build.name}' received a webhook update from '#{params[:service]}'")
+    logger.info(request.body.read)
+    head :ok
   end
 
   def model

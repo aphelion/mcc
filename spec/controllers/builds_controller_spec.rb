@@ -202,5 +202,22 @@ describe BuildsController do
         end
       end
     end
+
+    describe 'POST hook' do
+
+      context 'when Build exists' do
+        before do
+          stipulate(model).must receive(:find).with('1').and_return(build)
+          stipulate(build).must receive(:name).and_return('circle')
+        end
+
+        it 'responds OK' do
+          fulfill 'post builds#hook {"id"=>"1", "service"=>"circle"}'
+          post :hook, params: {id: '1', service: 'circle'}
+
+          expect(response).to have_http_status(:ok)
+        end
+      end
+    end
   end
 end
