@@ -22,4 +22,10 @@ deployment:
       - heroku maintenance:off -a aphelion-mcc-production
 notify:
   webhooks:
-    - url: http://mcc.aphelioncreative.com/builds/30/hook/circle
+    - url: http://mcc.aphelioncreative.com/builds/30/hook/circle # staging
+    - url: http://mcc.aphelion.io/builds/1/hook/circle # production
+experimental:
+  notify:
+    branches:
+      only:
+        - master
