@@ -1,3 +1,8 @@
+general:
+  branches:
+    only:
+      - master
+      - production
 deployment:
   staging:
     branch: master
@@ -7,6 +12,14 @@ deployment:
       - heroku run rake db:migrate -a aphelion-mcc-staging
       - heroku restart -a aphelion-mcc-staging
       - heroku maintenance:off -a aphelion-mcc-staging
+  production:
+    branch: production
+    commands:
+      - heroku maintenance:on -a aphelion-mcc-production
+      - git push git@heroku.com:aphelion-mcc-production.git $CIRCLE_SHA1:production
+      - heroku run rake db:migrate -a aphelion-mcc-production
+      - heroku restart -a aphelion-mcc-production
+      - heroku maintenance:off -a aphelion-mcc-production
 notify:
   webhooks:
     - url: http://mcc.aphelioncreative.com/builds/30/hook/circle
