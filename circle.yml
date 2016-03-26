@@ -16,7 +16,7 @@ deployment:
     branch: production
     commands:
       - heroku maintenance:on -a aphelion-mcc-production
-      - git push git@heroku.com:aphelion-mcc-production.git $CIRCLE_SHA1:production
+      - git push git@heroku.com:aphelion-mcc-production.git $CIRCLE_SHA1:master
       - heroku run rake db:migrate -a aphelion-mcc-production
       - heroku restart -a aphelion-mcc-production
       - heroku maintenance:off -a aphelion-mcc-production
