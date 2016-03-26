@@ -1,5 +1,5 @@
 class BuildsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:hook]
+  skip_before_action :verify_authenticity_token, :only => [:hook]
 
   def index
     @builds = model.all
@@ -36,10 +36,19 @@ class BuildsController < ApplicationController
   end
 
   def hook
-    build = model.find(params[:id])
-    logger.info("Build '#{build.name}' received a webhook update from '#{params[:service]}'")
-    logger.info(request.body.read)
-    head :ok
+    case params[:service]
+      when 'circle'
+        build = model.find(params[:id])
+        case params[:payload][:status]
+          when 'success'
+            build.update(status: :passed)
+          when 'failed'
+            build.update(status: :failed)
+        end
+        head :ok
+      else
+        head :bad_request
+    end
   end
 
   def model

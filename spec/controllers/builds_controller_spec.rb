@@ -207,15 +207,52 @@ describe BuildsController do
 
       context 'when Build exists' do
         before do
-          stipulate(model).must receive(:find).with('1').and_return(build)
-          stipulate(build).must receive(:name).and_return('circle')
+          allow(model).to receive(:find).with('1').and_return(build)
+          allow(build).to receive(:name).and_return('circle')
+          allow(build).to receive(:update)
         end
 
-        it 'responds OK' do
+        def do_post_passed
           fulfill 'post builds#hook {"id"=>"1", "service"=>"circle"}'
-          post :hook, params: {id: '1', service: 'circle'}
+          post :hook, params: {id: '1', service: 'circle', payload: {status: 'success'}}
+        end
 
-          expect(response).to have_http_status(:ok)
+        def do_post_failed
+          fulfill 'post builds#hook {"id"=>"1", "service"=>"circle"}'
+          post :hook, params: {id: '1', service: 'circle', payload: {status: 'failed'}}
+        end
+
+        context 'when provider is circle' do
+          it 'responds with HTTP status OK' do
+            do_post_passed
+
+            expect(response).to have_http_status(:ok)
+          end
+
+          context 'when the build passed' do
+            it 'updates the build with passed status' do
+              expect(build).to receive(:update).with(status: :passed)
+
+              do_post_passed
+            end
+          end
+
+          context 'when the build failed' do
+            it 'updates the build with failed status' do
+              expect(build).to receive(:update).with(status: :failed)
+
+              do_post_failed
+            end
+          end
+        end
+
+        context 'when provider is something unexpected' do
+          it 'responds HTTP status Bad Request' do
+            fulfill 'post builds#hook {"id"=>"1", "service"=>"circle"}'
+            post :hook, params: {id: '1', service: 'hackers'}
+
+            expect(response).to have_http_status(:bad_request)
+          end
         end
       end
     end
